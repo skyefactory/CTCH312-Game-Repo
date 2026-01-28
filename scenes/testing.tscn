@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://diy3i46wp32lt"]
 
-[ext_resource type="Script" uid="uid://dv8kmmbjpkh73" path="res://reciept_printer.gd" id="1_co24e"]
-[ext_resource type="PackedScene" uid="uid://47fxps5vik0k" path="res://models/reciept printer.glb" id="2_feb8i"]
+[ext_resource type="Script" uid="uid://dv8kmmbjpkh73" path="res://scripts/reciept_printer.gd" id="1_pcu7d"]
+[ext_resource type="PackedScene" uid="uid://47fxps5vik0k" path="res://models/reciept printer.glb" id="2_l6grw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_kj3p2"]
 size = Vector3(2.0302734, 2.0182495, 2.531479)
@@ -12,9 +12,9 @@ radius = 2.574369
 [node name="Node3D" type="Node3D" unique_id=1322774428]
 
 [node name="Reciept Printer" type="Node3D" parent="." unique_id=138310005]
-script = ExtResource("1_co24e")
+script = ExtResource("1_pcu7d")
 
-[node name="Printer Model" parent="Reciept Printer" unique_id=774496880 instance=ExtResource("2_feb8i")]
+[node name="Printer Model" parent="Reciept Printer" unique_id=774496880 instance=ExtResource("2_l6grw")]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="Reciept Printer" unique_id=1190288298]
 

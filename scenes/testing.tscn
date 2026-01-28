@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://b4piouhthm4xb" path="res://scenes/reciept_printer.tscn" id="1_ryjsw"]
 [ext_resource type="PackedScene" uid="uid://c7i4wqiffs62l" path="res://scenes/griddle.tscn" id="2_3dx25"]
-[ext_resource type="PackedScene" uid="uid://171aeg7a0tql" path="res://models/blend files/counter.blend" id="3_nuoa6"]
-[ext_resource type="PackedScene" uid="uid://bbhgjeo8g0uff" path="res://models/blend files/ticketholder.blend" id="4_kri1i"]
+[ext_resource type="PackedScene" uid="uid://ucw4m14fn03y" path="res://models/blend files/counter.blend" id="3_nuoa6"]
+[ext_resource type="PackedScene" uid="uid://dhk4lydbyvn5c" path="res://models/blend files/ticketholder.blend" id="4_kri1i"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_5qbqa"]
 size = Vector3(30, 1, 30)
@@ -13,7 +13,7 @@ size = Vector3(30, 1, 30)
 [node name="Reciept Printer" parent="." unique_id=12030724 instance=ExtResource("1_ryjsw")]
 transform = Transform3D(-0.021919565, 0, 0.99975973, 0, 1, 0, -0.99975973, 0, -0.021919565, -10.539604, 2.9934292, 5.4156485)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1153245243]
+[node name="Floor" type="MeshInstance3D" parent="." unique_id=1153245243]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6680696, 0)
 mesh = SubResource("BoxMesh_5qbqa")
 

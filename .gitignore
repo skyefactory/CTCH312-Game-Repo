@@ -1,4 +1,7 @@
-
+.godot/
+*.csproj
+*.sln
+*.import
 
 # Godot-specific ignores
 .import/

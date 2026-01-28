@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bvkt51tx2l1ia"
-path="res://.godot/imported/reciept printer.blend-37d1cbd338be647727c273314280ba0a.scn"
+path="res://.godot/imported/ticketprinter.blend-41c9ae6bdc7710b5c1a97e408c1d4185.scn"
 
 [deps]
 
-source_file="res://models/blend files/reciept printer.blend"
-dest_files=["res://.godot/imported/reciept printer.blend-37d1cbd338be647727c273314280ba0a.scn"]
+source_file="res://models/blend files/ticketprinter.blend"
+dest_files=["res://.godot/imported/ticketprinter.blend-41c9ae6bdc7710b5c1a97e408c1d4185.scn"]
 
 [params]
 

@@ -1,38 +1,31 @@
 [gd_scene format=3 uid="uid://diy3i46wp32lt"]
 
-[ext_resource type="Script" uid="uid://dv8kmmbjpkh73" path="res://scripts/reciept_printer.gd" id="1_pcu7d"]
-[ext_resource type="PackedScene" uid="uid://47fxps5vik0k" path="res://models/reciept printer.glb" id="2_l6grw"]
+[ext_resource type="PackedScene" uid="uid://b4piouhthm4xb" path="res://scenes/reciept_printer.tscn" id="1_ryjsw"]
+[ext_resource type="PackedScene" uid="uid://c7i4wqiffs62l" path="res://scenes/griddle.tscn" id="2_3dx25"]
+[ext_resource type="PackedScene" uid="uid://171aeg7a0tql" path="res://models/blend files/counter.blend" id="3_nuoa6"]
+[ext_resource type="PackedScene" uid="uid://bbhgjeo8g0uff" path="res://models/blend files/ticketholder.blend" id="4_kri1i"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_kj3p2"]
-size = Vector3(2.0302734, 2.0182495, 2.531479)
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_co24e"]
-radius = 2.574369
+[sub_resource type="BoxMesh" id="BoxMesh_5qbqa"]
+size = Vector3(30, 1, 30)
 
 [node name="Node3D" type="Node3D" unique_id=1322774428]
 
-[node name="Reciept Printer" type="Node3D" parent="." unique_id=138310005]
-script = ExtResource("1_pcu7d")
+[node name="Reciept Printer" parent="." unique_id=12030724 instance=ExtResource("1_ryjsw")]
+transform = Transform3D(-0.021919565, 0, 0.99975973, 0, 1, 0, -0.99975973, 0, -0.021919565, -10.539604, 2.9934292, 5.4156485)
 
-[node name="Printer Model" parent="Reciept Printer" unique_id=774496880 instance=ExtResource("2_l6grw")]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1153245243]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6680696, 0)
+mesh = SubResource("BoxMesh_5qbqa")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Reciept Printer" unique_id=1190288298]
+[node name="Griddle" parent="." unique_id=1082305125 instance=ExtResource("2_3dx25")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.972588, -1.3276114, 11.138224)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Reciept Printer/StaticBody3D" unique_id=1728727373]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00048828125, 0.09213257, 0.005622864)
-shape = SubResource("BoxShape3D_kj3p2")
+[node name="Counter" type="Node3D" parent="." unique_id=735851047]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.959816, 0.97034407, -1.8528824)
 
-[node name="Trigger Area" type="Area3D" parent="Reciept Printer" unique_id=1501649023]
+[node name="counter model" parent="Counter" unique_id=2103890735 instance=ExtResource("3_nuoa6")]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Reciept Printer/Trigger Area" unique_id=1403660552]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00048828125, 0.8956127, 0.005622864)
-shape = SubResource("SphereShape3D_co24e")
+[node name="Ticket Holder" type="Node3D" parent="Counter" unique_id=653869077]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.9076738, 3.729329, 0)
 
-[node name="ticketpickup" type="Label" parent="Reciept Printer" unique_id=323269956]
-offset_left = 481.0
-offset_top = 308.0
-offset_right = 672.0
-offset_bottom = 331.0
-
-[connection signal="body_entered" from="Reciept Printer/Trigger Area" to="Reciept Printer" method="_on_trigger_area_body_entered"]
-[connection signal="body_exited" from="Reciept Printer/Trigger Area" to="Reciept Printer" method="_on_trigger_area_body_exited"]
+[node name="ticketholder" parent="Counter/Ticket Holder" unique_id=952944953 instance=ExtResource("4_kri1i")]

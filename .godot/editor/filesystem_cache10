@@ -1,13 +1,17 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1769568062
+::res://::1769569981
 icon.svg::CompressedTexture2D::9118244302068510825::1769559939::1769559943::1::::<><><>0<>0<>b743f7975e079af1ee1c950f5e99b636<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
 README.md::TextFile::-1::1769560318::0::1::::<><><>0<>0<><>::
-::res://models/::1769561921
-reciept printer.glb::PackedScene::2101882028904681172::1769561918::1769561921::1::::<><><>0<>0<>a7b6eb30ab4d4a0053d1f18f07e89f9f<>res://.godot/imported/reciept printer.glb-f54495dde77d52dff0be18c370942699.scn::
-::res://models/blend files/::1769561922
-reciept printer.blend::PackedScene::3882238770352034720::1769561896::1769561922::1::::<><><>0<>0<>31117e4fe4b16ec7b42d6d995e362e9b<>res://.godot/imported/reciept printer.blend-37d1cbd338be647727c273314280ba0a.scn::
-::res://scenes/::1769568062
+::res://models/::1769569989
+::res://models/blend files/::1769570113
+counter.blend::PackedScene::1892548885347848639::1769569728::1769569757::1::::<><><>0<>0<>111b042a30b067a2f1949ce2f631a1e3<>res://.godot/imported/counter.blend-aa0a17ea7927571b3228a2cfebfff9a3.scn::
+griddle.blend::PackedScene::949448532030128025::1769569766::1769569769::1::::<><><>0<>0<>60e9f8b9cc859b52ad55e7d2b4e61e1c<>res://.godot/imported/griddle.blend-823315acd7004ba905b1304d73c0614c.scn::
+ticketholder.blend::PackedScene::2471440778940350023::1769570113::1769570116::1::::<><><>0<>0<>9b5e001427b1a9de1f98b5eaf86ab71f<>res://.godot/imported/ticketholder.blend-3028d35d6d9c52b123628ea6091b5a2c.scn::
+ticketprinter.blend::PackedScene::3882238770352034720::1769569876::1769569983::1::::<><><>0<>0<>fd01f3fbeb0119acd1ed31db5df52ae9<>res://.godot/imported/ticketprinter.blend-41c9ae6bdc7710b5c1a97e408c1d4185.scn::
+::res://scenes/::1769569981
+griddle.tscn::PackedScene::7037200319058492445::1769569955::0::1::::<><><>0<>0<><>::uid://nr6jqclysfif::::res://models/blend files/griddle.blend
 main.tscn::PackedScene::2647030037025229859::1769559978::0::1::::<><><>0<>0<><>::
-testing.tscn::PackedScene::7772033800516544581::1769568177::0::1::::<><><>0<>0<><>::uid://dv8kmmbjpkh73::::res://reciept_printer.gd<>uid://47fxps5vik0k::::res://models/reciept printer.glb
-::res://scripts/::0
+reciept_printer.tscn::PackedScene::4453374614717504243::1769569981::0::1::::<><><>0<>0<><>::uid://dv8kmmbjpkh73::::res://scripts/reciept_printer.gd<>uid://bvkt51tx2l1ia::::res://models/blend files/ticketprinter.blend
+testing.tscn::PackedScene::7772033800516544581::1769568523::0::1::::<><><>0<>0<><>::uid://b4piouhthm4xb::::res://scenes/reciept_printer.tscn
+::res://scripts/::1769568177
 reciept_printer.gd::GDScript::8701981465070851480::1769568033::0::1::::<>Node3D<><>0<>0<><>::

@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://b4piouhthm4xb"]
+
+[ext_resource type="Script" uid="uid://dv8kmmbjpkh73" path="res://scripts/reciept_printer.gd" id="1_6wiug"]
+[ext_resource type="PackedScene" uid="uid://bvkt51tx2l1ia" path="res://models/blend files/ticketprinter.blend" id="2_6wiug"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kj3p2"]
+size = Vector3(2.0302734, 2.0182495, 2.531479)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_co24e"]
+radius = 2.574369
+
+[node name="Reciept Printer" type="Node3D" unique_id=12030724]
+script = ExtResource("1_6wiug")
+
+[node name="printer model" parent="." unique_id=80311136 instance=ExtResource("2_6wiug")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.09563887, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=941758124]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1682674004]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00048828125, 0.09213257, 0.005622864)
+shape = SubResource("BoxShape3D_kj3p2")
+
+[node name="Trigger Area" type="Area3D" parent="." unique_id=559856190]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Trigger Area" unique_id=1181713780]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00048828125, 0.8956127, 0.005622864)
+shape = SubResource("SphereShape3D_co24e")
+
+[node name="ticketpickup" type="Label" parent="." unique_id=591852843]
+offset_left = 481.0
+offset_top = 308.0
+offset_right = 672.0
+offset_bottom = 331.0
+
+[connection signal="body_entered" from="Trigger Area" to="." method="_on_trigger_area_body_entered"]
+[connection signal="body_exited" from="Trigger Area" to="." method="_on_trigger_area_body_exited"]

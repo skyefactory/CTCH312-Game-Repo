@@ -1,5 +1,8 @@
 class_name Player extends CharacterBody3D
 
+# Main movement code was adapted from https://github.com/rbarongr/GodotFirstPersonController/tree/main
+# All credits to them for the code.
+
 @export_range(1, 35, 1) var speed: float = 10 # m/s
 @export_range(10, 400, 1) var acceleration: float = 100 # m/s^2
 
@@ -29,6 +32,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		if mouse_captured: _rotate_camera()
 
 func _physics_process(delta: float) -> void:
+	if Input.is_action_just_pressed("release_mouse"):
+		if mouse_captured: release_mouse()
+		else: capture_mouse()
 	if Input.is_action_just_pressed(&"jump"): jumping = true
 	velocity = _walk(delta) + _gravity(delta) + _jump(delta)
 	move_and_slide()

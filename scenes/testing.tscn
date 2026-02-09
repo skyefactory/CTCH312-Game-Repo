@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c7i4wqiffs62l" path="res://scenes/griddle.tscn" id="2_3dx25"]
 [ext_resource type="Script" uid="uid://cic6pigase4kq" path="res://scenes/character_body_3d.gd" id="3_l6grw"]
 [ext_resource type="PackedScene" uid="uid://ucw4m14fn03y" path="res://models/blend files/counter.blend" id="3_nuoa6"]
+[ext_resource type="PackedScene" uid="uid://cgumsdnkyal2d" path="res://gui_panel_3d.tscn" id="7_gi1h7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nuoa6"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -30,15 +31,32 @@ size = Vector3(30, 1, 46.510483)
 [sub_resource type="QuadMesh" id="QuadMesh_pcu7d"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_pcu7d"]
-viewport_path = NodePath("SubViewport")
+viewport_path = NodePath("Screen2/SubViewport")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l6grw"]
 resource_local_to_scene = true
 albedo_texture = SubResource("ViewportTexture_pcu7d")
 
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_nuoa6"]
+data = PackedVector3Array(0.5, -0.5, 0, -0.5, -0.5, 0, 0.5, 0.5, 0, -0.5, -0.5, 0, -0.5, 0.5, 0, 0.5, 0.5, 0)
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3dx25"]
 radius = 2.0
 height = 10.0
+
+[sub_resource type="GDScript" id="GDScript_nuoa6"]
+script/source = "extends Node3D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
 
 [node name="Node3D" type="Node3D" unique_id=1322774428]
 script = ExtResource("1_3dx25")
@@ -87,207 +105,17 @@ mesh = SubResource("BoxMesh_5qbqa")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.011978149, -1.6565725, 0.05971527)
 shape = SubResource("BoxShape3D_nuoa6")
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="." unique_id=211506860]
+[node name="Screen" type="StaticBody3D" parent="." unique_id=211506860]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.903238, 6.006843, -13.496027)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2" unique_id=883263178]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Screen" unique_id=883263178]
 transform = Transform3D(-7.86805e-07, 0, 10, 0, 10, 0, -18, 0, -4.371139e-07, 0, 5.7949686, 0)
 mesh = SubResource("QuadMesh_pcu7d")
 surface_material_override/0 = SubResource("StandardMaterial3D_l6grw")
 
-[node name="SubViewport" type="SubViewport" parent="." unique_id=534928352]
-size = Vector2i(1024, 720)
-
-[node name="GridContainer" type="GridContainer" parent="SubViewport" unique_id=1118385302]
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 50.0
-offset_bottom = 50.0
-theme_override_constants/h_separation = 225
-theme_override_constants/v_separation = 225
-columns = 4
-
-[node name="Order" type="Control" parent="SubViewport/GridContainer" unique_id=983624901]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="SubViewport/GridContainer/Order" unique_id=1271345137]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-color = Color(0.52947485, 0.52826935, 3.85046e-07, 1)
-
-[node name="Base Order" type="RichTextLabel" parent="SubViewport/GridContainer/Order" unique_id=740537976]
-layout_mode = 0
-offset_right = 200.0
-offset_bottom = 200.0
-text = "Burger"
-
-[node name="Additions" type="RichTextLabel" parent="SubViewport/GridContainer/Order" unique_id=1946329241]
-clip_contents = false
-layout_mode = 0
-offset_left = 25.0
-offset_top = 25.0
-offset_right = 225.0
-offset_bottom = 225.0
-text = "- Lettuce
-- Cheese"
-
-[node name="Order3" type="Control" parent="SubViewport/GridContainer" unique_id=38277854]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="SubViewport/GridContainer/Order3" unique_id=643256711]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-color = Color(0.52947485, 0.52826935, 3.85046e-07, 1)
-
-[node name="Base Order" type="RichTextLabel" parent="SubViewport/GridContainer/Order3" unique_id=2146406435]
-layout_mode = 0
-offset_right = 200.0
-offset_bottom = 200.0
-text = "Burger"
-
-[node name="Additions" type="RichTextLabel" parent="SubViewport/GridContainer/Order3" unique_id=267968466]
-clip_contents = false
-layout_mode = 0
-offset_left = 25.0
-offset_top = 25.0
-offset_right = 225.0
-offset_bottom = 225.0
-text = "- Lettuce
-- Cheese"
-
-[node name="Order4" type="Control" parent="SubViewport/GridContainer" unique_id=1887634966]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="SubViewport/GridContainer/Order4" unique_id=1626302260]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-color = Color(0.52947485, 0.52826935, 3.85046e-07, 1)
-
-[node name="Base Order" type="RichTextLabel" parent="SubViewport/GridContainer/Order4" unique_id=1015979237]
-layout_mode = 0
-offset_right = 200.0
-offset_bottom = 200.0
-text = "Burger"
-
-[node name="Additions" type="RichTextLabel" parent="SubViewport/GridContainer/Order4" unique_id=615853341]
-clip_contents = false
-layout_mode = 0
-offset_left = 25.0
-offset_top = 25.0
-offset_right = 225.0
-offset_bottom = 225.0
-text = "- Lettuce
-- Cheese"
-
-[node name="Order5" type="Control" parent="SubViewport/GridContainer" unique_id=1146167275]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="SubViewport/GridContainer/Order5" unique_id=510901348]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-color = Color(0.52947485, 0.52826935, 3.85046e-07, 1)
-
-[node name="Base Order" type="RichTextLabel" parent="SubViewport/GridContainer/Order5" unique_id=1414170002]
-layout_mode = 0
-offset_right = 200.0
-offset_bottom = 200.0
-text = "Burger"
-
-[node name="Additions" type="RichTextLabel" parent="SubViewport/GridContainer/Order5" unique_id=1153139873]
-clip_contents = false
-layout_mode = 0
-offset_left = 25.0
-offset_top = 25.0
-offset_right = 225.0
-offset_bottom = 225.0
-text = "- Lettuce
-- Cheese"
-
-[node name="Order6" type="Control" parent="SubViewport/GridContainer" unique_id=23948927]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="SubViewport/GridContainer/Order6" unique_id=1283415594]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-color = Color(0.52947485, 0.52826935, 3.85046e-07, 1)
-
-[node name="Base Order" type="RichTextLabel" parent="SubViewport/GridContainer/Order6" unique_id=1780429730]
-layout_mode = 0
-offset_right = 200.0
-offset_bottom = 200.0
-text = "Burger"
-
-[node name="Additions" type="RichTextLabel" parent="SubViewport/GridContainer/Order6" unique_id=1679777203]
-clip_contents = false
-layout_mode = 0
-offset_left = 25.0
-offset_top = 25.0
-offset_right = 225.0
-offset_bottom = 225.0
-text = "- Lettuce
-- Cheese"
-
-[node name="Order7" type="Control" parent="SubViewport/GridContainer" unique_id=1051913793]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="SubViewport/GridContainer/Order7" unique_id=1436971219]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-color = Color(0.52947485, 0.52826935, 3.85046e-07, 1)
-
-[node name="Base Order" type="RichTextLabel" parent="SubViewport/GridContainer/Order7" unique_id=1744075263]
-layout_mode = 0
-offset_right = 200.0
-offset_bottom = 200.0
-text = "Burger"
-
-[node name="Additions" type="RichTextLabel" parent="SubViewport/GridContainer/Order7" unique_id=1402009541]
-clip_contents = false
-layout_mode = 0
-offset_left = 25.0
-offset_top = 25.0
-offset_right = 225.0
-offset_bottom = 225.0
-text = "- Lettuce
-- Cheese"
-
-[node name="Order8" type="Control" parent="SubViewport/GridContainer" unique_id=2019274023]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="SubViewport/GridContainer/Order8" unique_id=1361214616]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-color = Color(0.52947485, 0.52826935, 3.85046e-07, 1)
-
-[node name="Base Order" type="RichTextLabel" parent="SubViewport/GridContainer/Order8" unique_id=957763583]
-layout_mode = 0
-offset_right = 200.0
-offset_bottom = 200.0
-text = "Burger"
-
-[node name="Additions" type="RichTextLabel" parent="SubViewport/GridContainer/Order8" unique_id=828224566]
-clip_contents = false
-layout_mode = 0
-offset_left = 25.0
-offset_top = 25.0
-offset_right = 225.0
-offset_bottom = 225.0
-text = "- Lettuce
-- Cheese"
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Screen" unique_id=1951761998]
+transform = Transform3D(-7.86805e-07, 0, 10, 0, 10, 0, -18, 0, -4.371139e-07, 0, 5.7949686, 0)
+shape = SubResource("ConcavePolygonShape3D_nuoa6")
 
 [node name="OrderManager" type="Node" parent="." unique_id=837070661]
 
@@ -300,3 +128,47 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7076263, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=1448940888]
 shape = SubResource("CapsuleShape3D_3dx25")
+
+[node name="Screen2" type="Node3D" parent="." unique_id=568860690]
+script = SubResource("GDScript_nuoa6")
+
+[node name="SubViewport" type="SubViewport" parent="Screen2" unique_id=534928352]
+size = Vector2i(1024, 720)
+
+[node name="GridContainer" type="GridContainer" parent="Screen2/SubViewport" unique_id=1118385302]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 50.0
+offset_bottom = 50.0
+theme_override_constants/h_separation = 225
+theme_override_constants/v_separation = 225
+columns = 4
+
+[node name="Order" type="Control" parent="Screen2/SubViewport/GridContainer" unique_id=983624901]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Screen2/SubViewport/GridContainer/Order" unique_id=1271345137]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+color = Color(0.52947485, 0.52826935, 3.85046e-07, 1)
+
+[node name="Base Order" type="RichTextLabel" parent="Screen2/SubViewport/GridContainer/Order" unique_id=740537976]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 200.0
+text = "Burger"
+
+[node name="Additions" type="RichTextLabel" parent="Screen2/SubViewport/GridContainer/Order" unique_id=1946329241]
+clip_contents = false
+layout_mode = 0
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 225.0
+offset_bottom = 225.0
+text = "- Lettuce
+- Cheese"
+
+[node name="GUIPanel3D" parent="." unique_id=254680086 instance=ExtResource("7_gi1h7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.324256, -12.617773)

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cgumsdnkyal2d"]
 
-[ext_resource type="Script" uid="uid://6hdyilf635fm" path="res://gui_3d.gd" id="1"]
-[ext_resource type="Script" uid="uid://diykfrvwlcu1f" path="res://button.gd" id="2_5bmxw"]
+[ext_resource type="Script" uid="uid://6hdyilf635fm" path="res://scripts/gui_3d.gd" id="1"]
+[ext_resource type="Script" uid="uid://diykfrvwlcu1f" path="res://scripts/button.gd" id="2_5bmxw"]
 
 [sub_resource type="QuadMesh" id="1"]
 size = Vector2(3, 2)

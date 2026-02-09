@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://diy3i46wp32lt"]
 
-[ext_resource type="Script" uid="uid://bex4481iit5t" path="res://scenes/closegame.gd" id="1_3dx25"]
+[ext_resource type="Script" uid="uid://bex4481iit5t" path="res://scripts/closegame.gd" id="1_3dx25"]
 [ext_resource type="PackedScene" uid="uid://c7i4wqiffs62l" path="res://scenes/griddle.tscn" id="2_3dx25"]
-[ext_resource type="Script" uid="uid://cic6pigase4kq" path="res://scenes/character_body_3d.gd" id="3_l6grw"]
+[ext_resource type="Script" uid="uid://cic6pigase4kq" path="res://scripts/player_movement.gd" id="3_l6grw"]
 [ext_resource type="PackedScene" uid="uid://ucw4m14fn03y" path="res://models/blend files/counter.blend" id="3_nuoa6"]
-[ext_resource type="PackedScene" uid="uid://cgumsdnkyal2d" path="res://gui_panel_3d.tscn" id="7_gi1h7"]
+[ext_resource type="PackedScene" uid="uid://cgumsdnkyal2d" path="res://scenes/gui_panel_3d.tscn" id="7_gi1h7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nuoa6"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)

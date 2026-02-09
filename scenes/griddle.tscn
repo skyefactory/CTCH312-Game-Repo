@@ -1,7 +1,14 @@
 [gd_scene format=3 uid="uid://c7i4wqiffs62l"]
 
-[ext_resource type="PackedScene" uid="uid://nr6jqclysfif" path="res://models/blend files/griddle.blend" id="1_xa366"]
+[ext_resource type="PackedScene" uid="uid://bl6f3p03ytljn" path="res://models/blend files/griddle.blend" id="1_xa366"]
 
-[node name="Griddle" type="Node3D" unique_id=1082305125]
+[sub_resource type="BoxShape3D" id="BoxShape3D_xa366"]
+size = Vector3(4.726471, 4.527771, 5.996643)
+
+[node name="Griddle" type="StaticBody3D" unique_id=1004934080]
 
 [node name="Griddle Model" parent="." unique_id=669819832 instance=ExtResource("1_xa366")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=904198911]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.072769165, 2.2903748, 0.016448975)
+shape = SubResource("BoxShape3D_xa366")

@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://eu60c84sxykh"]
+
+[ext_resource type="Script" uid="uid://diykfrvwlcu1f" path="res://scripts/button.gd" id="1_ydosi"]
+
+[node name="Order1" type="Control" unique_id=1298157846]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Button" type="Button" parent="." unique_id=59237145]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 200.0
+toggle_mode = true
+script = ExtResource("1_ydosi")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=274165364]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(1, 0, 0, 1)
+
+[node name="Base Order" type="RichTextLabel" parent="." unique_id=943594512]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 200.0
+mouse_filter = 2
+text = "PLACEHOLDER"
+
+[node name="Additions" type="RichTextLabel" parent="." unique_id=1375929280]
+clip_contents = false
+layout_mode = 0
+offset_left = 25.0
+offset_top = 25.0
+offset_right = 225.0
+offset_bottom = 225.0
+mouse_filter = 2
+text = "- PLACEHOLDER"
+
+[connection signal="toggled" from="Button" to="Button" method="_on_toggled"]

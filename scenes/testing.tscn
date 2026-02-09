@@ -4,7 +4,21 @@
 [ext_resource type="PackedScene" uid="uid://c7i4wqiffs62l" path="res://scenes/griddle.tscn" id="2_3dx25"]
 [ext_resource type="Script" uid="uid://cic6pigase4kq" path="res://scripts/player_movement.gd" id="3_l6grw"]
 [ext_resource type="PackedScene" uid="uid://ucw4m14fn03y" path="res://models/blend files/counter.blend" id="3_nuoa6"]
+[ext_resource type="Script" uid="uid://ybco1dh7xlee" path="res://scenes/order_manager.gd" id="4_kri1i"]
 [ext_resource type="PackedScene" uid="uid://cgumsdnkyal2d" path="res://scenes/gui_panel_3d.tscn" id="7_gi1h7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pcu7d"]
+size = Vector3(9.564529, 5.1602783, 18.396355)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5qbqa"]
+size = Vector3(30, 1, 30)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nuoa6"]
+size = Vector3(30, 1, 46.510483)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3dx25"]
+radius = 2.0
+height = 10.0
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_nuoa6"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -18,45 +32,6 @@ background_mode = 2
 sky = SubResource("Sky_kri1i")
 tonemap_mode = 2
 glow_enabled = true
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_pcu7d"]
-size = Vector3(9.564529, 5.1602783, 18.396355)
-
-[sub_resource type="BoxMesh" id="BoxMesh_5qbqa"]
-size = Vector3(30, 1, 30)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_nuoa6"]
-size = Vector3(30, 1, 46.510483)
-
-[sub_resource type="QuadMesh" id="QuadMesh_pcu7d"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_pcu7d"]
-viewport_path = NodePath("Screen2/SubViewport")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l6grw"]
-resource_local_to_scene = true
-albedo_texture = SubResource("ViewportTexture_pcu7d")
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_nuoa6"]
-data = PackedVector3Array(0.5, -0.5, 0, -0.5, -0.5, 0, 0.5, 0.5, 0, -0.5, -0.5, 0, -0.5, 0.5, 0, 0.5, 0.5, 0)
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3dx25"]
-radius = 2.0
-height = 10.0
-
-[sub_resource type="GDScript" id="GDScript_nuoa6"]
-script/source = "extends Node3D
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
 
 [node name="Node3D" type="Node3D" unique_id=1322774428]
 script = ExtResource("1_3dx25")
@@ -74,13 +49,6 @@ offset_bottom = 2.5
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=525266440]
-environment = SubResource("Environment_5qbqa")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=929960685]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
-shadow_enabled = true
 
 [node name="Griddle" parent="." unique_id=1082305125 instance=ExtResource("2_3dx25")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 11.905416, -1.3276114, 18.36706)
@@ -105,19 +73,8 @@ mesh = SubResource("BoxMesh_5qbqa")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.011978149, -1.6565725, 0.05971527)
 shape = SubResource("BoxShape3D_nuoa6")
 
-[node name="Screen" type="StaticBody3D" parent="." unique_id=211506860]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.903238, 6.006843, -13.496027)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Screen" unique_id=883263178]
-transform = Transform3D(-7.86805e-07, 0, 10, 0, 10, 0, -18, 0, -4.371139e-07, 0, 5.7949686, 0)
-mesh = SubResource("QuadMesh_pcu7d")
-surface_material_override/0 = SubResource("StandardMaterial3D_l6grw")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Screen" unique_id=1951761998]
-transform = Transform3D(-7.86805e-07, 0, 10, 0, 10, 0, -18, 0, -4.371139e-07, 0, 5.7949686, 0)
-shape = SubResource("ConcavePolygonShape3D_nuoa6")
-
 [node name="OrderManager" type="Node" parent="." unique_id=837070661]
+script = ExtResource("4_kri1i")
 
 [node name="CharacterBody3D" type="CharacterBody3D" parent="." unique_id=243915831]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.2454286, 0)
@@ -129,46 +86,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7076263, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D" unique_id=1448940888]
 shape = SubResource("CapsuleShape3D_3dx25")
 
-[node name="Screen2" type="Node3D" parent="." unique_id=568860690]
-script = SubResource("GDScript_nuoa6")
-
-[node name="SubViewport" type="SubViewport" parent="Screen2" unique_id=534928352]
-size = Vector2i(1024, 720)
-
-[node name="GridContainer" type="GridContainer" parent="Screen2/SubViewport" unique_id=1118385302]
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 50.0
-offset_bottom = 50.0
-theme_override_constants/h_separation = 225
-theme_override_constants/v_separation = 225
-columns = 4
-
-[node name="Order" type="Control" parent="Screen2/SubViewport/GridContainer" unique_id=983624901]
-layout_mode = 2
-
-[node name="ColorRect" type="ColorRect" parent="Screen2/SubViewport/GridContainer/Order" unique_id=1271345137]
-custom_minimum_size = Vector2(200, 200)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-color = Color(0.52947485, 0.52826935, 3.85046e-07, 1)
-
-[node name="Base Order" type="RichTextLabel" parent="Screen2/SubViewport/GridContainer/Order" unique_id=740537976]
-layout_mode = 0
-offset_right = 200.0
-offset_bottom = 200.0
-text = "Burger"
-
-[node name="Additions" type="RichTextLabel" parent="Screen2/SubViewport/GridContainer/Order" unique_id=1946329241]
-clip_contents = false
-layout_mode = 0
-offset_left = 25.0
-offset_top = 25.0
-offset_right = 225.0
-offset_bottom = 225.0
-text = "- Lettuce
-- Cheese"
-
 [node name="GUIPanel3D" parent="." unique_id=254680086 instance=ExtResource("7_gi1h7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.324256, -12.617773)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -12.450389, 11.324073, -13.446065)
+
+[node name="Env Lighting" type="Node3D" parent="." unique_id=570604838]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Env Lighting" unique_id=1092179827]
+environment = SubResource("Environment_5qbqa")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Env Lighting" unique_id=652900271]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true

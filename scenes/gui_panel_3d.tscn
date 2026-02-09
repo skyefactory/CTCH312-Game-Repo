@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cgumsdnkyal2d"]
 
 [ext_resource type="Script" uid="uid://6hdyilf635fm" path="res://scripts/gui_3d.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://eu60c84sxykh" path="res://scenes/OrderOnScreenUI.tscn" id="2_r3bp0"]
 
 [sub_resource type="QuadMesh" id="1"]
 size = Vector2(15, 10)
@@ -35,9 +34,6 @@ offset_bottom = 50.0
 theme_override_constants/h_separation = 225
 theme_override_constants/v_separation = 225
 columns = 4
-
-[node name="Order" parent="SubViewport/GridContainer" unique_id=1298157846 instance=ExtResource("2_r3bp0")]
-layout_mode = 2
 
 [node name="Quad" type="MeshInstance3D" parent="." unique_id=1270843842]
 mesh = SubResource("1")

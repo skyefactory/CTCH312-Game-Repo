@@ -1,132 +1,99 @@
 extends Node3D
-# This code is from https://godotengine.org/asset-library/asset/2807
-# All credits to them.
+# This code is based on https://godotengine.org/asset-library/asset/2807
 
-# Used for checking if the mouse is inside the Area3D.
-var is_mouse_inside = false
+var is_hovering: bool = false
 # The last processed input touch/mouse event. To calculate relative movement.
 var last_event_pos2D = null
 # The time of the last event in seconds since engine start.
 var last_event_time: float = -1.0
 
-@onready var node_viewport = $SubViewport
-@onready var node_quad = $Quad
-@onready var node_area = $Quad/Area3D
+#node references for the screen
+@onready var node_viewport = $SubViewport #The viewport rendered on the 'screen'
+@onready var node_quad = $Quad #the actual screen object
+@onready var node_area = $Quad/Area3D #collision detection
 
-func _ready():
-	node_area.mouse_entered.connect(_mouse_entered_area)
-	node_area.mouse_exited.connect(_mouse_exited_area)
-	node_area.input_event.connect(_mouse_input_event)
+func _physics_process(delta: float) -> void:
+	_raycast_from_crosshair()
+	
+func _raycast_from_crosshair():
+	#get the camera
+	var camera := get_viewport().get_camera_3d()
+	
+	if camera == null:
+		return
+	#get the exact center of the screen, this is where the crosshair is
+	var viewport_size = get_viewport().size
+	var screen_center = viewport_size / 2
+	
+	#send out a ray from the center of the screen relative to where the camera is
+	var ray_origin = camera.project_ray_origin(screen_center)
+	var ray_direction = camera.project_ray_normal(screen_center)
 
-	# If the material is NOT set to use billboard settings, then avoid running billboard specific code
-	if node_quad.get_surface_override_material(0).billboard_mode == BaseMaterial3D.BillboardMode.BILLBOARD_DISABLED:
-		set_process(false)
+	var space_state = get_world_3d().direct_space_state
+	var query = PhysicsRayQueryParameters3D.create(
+		ray_origin,
+		ray_origin + ray_direction * 1000.0
+	)
 
+	query.collide_with_areas = true
+	query.collide_with_bodies = false
+	#check what the ray intersected with.
+	var result = space_state.intersect_ray(query)
 
-func _process(_delta):
-	# NOTE: Remove this function if you don't plan on using billboard settings.
-	rotate_area_to_billboard()
+	#check if the result has a collider, if so, does the collider match our screen collider?
+	if result and result.collider == node_area:
+		#Yes , it is our screen, process the collision
+		is_hovering = true
+		_process_hit_position(result.position)
+	else:
+		is_hovering = false	
 
-
-func _mouse_entered_area():
-	is_mouse_inside = true
-
-
-func _mouse_exited_area():
-	is_mouse_inside = false
-
-
-func _unhandled_input(event):
-	# Check if the event is a non-mouse/non-touch event
-	for mouse_event in [InputEventMouseButton, InputEventMouseMotion, InputEventScreenDrag, InputEventScreenTouch]:
-		if is_instance_of(event, mouse_event):
-			# If the event is a mouse/touch event, then we can ignore it here, because it will be
-			# handled via Physics Picking.
-			return
-	node_viewport.push_input(event)
-
-
-func _mouse_input_event(_camera: Camera3D, event: InputEvent, event_position: Vector3, _normal: Vector3, _shape_idx: int):
-	# Get mesh size to detect edges and make conversions. This code only support PlaneMesh and QuadMesh.
+func _process_hit_position(hit_position: Vector3):
 	var quad_mesh_size = node_quad.mesh.size
 
-	# Event position in Area3D in world coordinate space.
-	var event_pos3D = event_position
+	# turns the hit of the screen to coordinates that are local to the screen. This gives us x,y on the screen rather then world coords
+	var local_pos = node_quad.global_transform.affine_inverse() * hit_position
 
-	# Current time in seconds since engine start.
-	var now: float = Time.get_ticks_msec() / 1000.0
+	# Convert 3D → 2D
+	var pos2D = Vector2(local_pos.x, -local_pos.y)
 
-	# Convert position to a coordinate space relative to the Area3D node.
-	# NOTE: affine_inverse accounts for the Area3D node's scale, rotation, and position in the scene!
-	event_pos3D = node_quad.global_transform.affine_inverse() * event_pos3D
+	# Normalize in terms of 0 to 1
+	pos2D.x = (pos2D.x / quad_mesh_size.x) + 0.5
+	pos2D.y = (pos2D.y / quad_mesh_size.y) + 0.5
 
-	# TODO: Adapt to bilboard mode or avoid completely.
+	# Convert → viewport space - The viewport is a 2d space we are projecting on the quad/screen
+	pos2D.x *= node_viewport.size.x
+	pos2D.y *= node_viewport.size.y
 
-	var event_pos2D: Vector2 = Vector2()
+	var now = Time.get_ticks_msec() / 1000.0
 
-	if is_mouse_inside:
-		# Convert the relative event position from 3D to 2D.
-		event_pos2D = Vector2(event_pos3D.x, -event_pos3D.y)
+	# Create mouse motion event
+	var motion_event := InputEventMouseMotion.new()
+	motion_event.position = pos2D
+	motion_event.global_position = pos2D
 
-		# Right now the event position's range is the following: (-quad_size/2) -> (quad_size/2)
-		# We need to convert it into the following range: -0.5 -> 0.5
-		event_pos2D.x = event_pos2D.x / quad_mesh_size.x
-		event_pos2D.y = event_pos2D.y / quad_mesh_size.y
-		# Then we need to convert it into the following range: 0 -> 1
-		event_pos2D.x += 0.5
-		event_pos2D.y += 0.5
+	if last_event_time > 0.0:
+		motion_event.relative = pos2D - last_event_pos2D
+		motion_event.velocity = motion_event.relative / (now - last_event_time)
+	else:
+		motion_event.relative = Vector2.ZERO
+		motion_event.velocity = Vector2.ZERO
 
-		# Finally, we convert the position to the following range: 0 -> viewport.size
-		event_pos2D.x *= node_viewport.size.x
-		event_pos2D.y *= node_viewport.size.y
-		# We need to do these conversions so the event's position is in the viewport's coordinate system.
+	node_viewport.push_input(motion_event)
 
-	elif last_event_pos2D != null:
-		# Fall back to the last known event position.
-		event_pos2D = last_event_pos2D
-
-	# Set the event's position and global position.
-	event.position = event_pos2D
-	if event is InputEventMouse:
-		event.global_position = event_pos2D
-
-	# Calculate the relative event distance.
-	if event is InputEventMouseMotion or event is InputEventScreenDrag:
-		# If there is not a stored previous position, then we'll assume there is no relative motion.
-		if last_event_pos2D == null:
-			event.relative = Vector2(0, 0)
-		# If there is a stored previous position, then we'll calculate the relative position by subtracting
-		# the previous position from the new position. This will give us the distance the event traveled from prev_pos.
-		else:
-			event.relative = event_pos2D - last_event_pos2D
-			event.velocity = event.relative / (now - last_event_time)
-
-	# Update last_event_pos2D with the position we just calculated.
-	last_event_pos2D = event_pos2D
-
-	# Update last_event_time to current time.
+	last_event_pos2D = pos2D
 	last_event_time = now
 
-	# Finally, send the processed input event to the viewport.
-	node_viewport.push_input(event)
 
+func _input(event):
+	if not is_hovering:
+		return
 
-func rotate_area_to_billboard():
-	var billboard_mode = node_quad.get_surface_override_material(0).params_billboard_mode
+	if event is InputEventMouseButton:
+		var button_event := InputEventMouseButton.new()
+		button_event.button_index = event.button_index
+		button_event.pressed = event.pressed
+		button_event.position = last_event_pos2D
+		button_event.global_position = last_event_pos2D
 
-	# Try to match the area with the material's billboard setting, if enabled.
-	if billboard_mode > 0:
-		# Get the camera.
-		var camera = get_viewport().get_camera_3d()
-		# Look in the same direction as the camera.
-		var look = camera.to_global(Vector3(0, 0, -100)) - camera.global_transform.origin
-		look = node_area.position + look
-
-		# Y-Billboard: Lock Y rotation, but gives bad results if the camera is tilted.
-		if billboard_mode == 2:
-			look = Vector3(look.x, 0, look.z)
-
-		node_area.look_at(look, Vector3.UP)
-
-		# Rotate in the Z axis to compensate camera tilt.
-		node_area.rotate_object_local(Vector3.BACK, camera.rotation.z)
+		node_viewport.push_input(button_event)

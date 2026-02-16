@@ -11,9 +11,12 @@ var variations: Array = []
 var id: int
 #Status of the order, can be pending, active, or completed
 var status: String = "pending"
+var orderui: Control
+var islate: bool = false
 
 #Initialize the fields
-func _init(_id: int, _base: String, _variations: Array):
+func _init(_id: int, _base: String, _variations: Array, _orderui: Control):
 	id = _id
 	base = _base
 	variations = _variations
+	orderui = _orderui

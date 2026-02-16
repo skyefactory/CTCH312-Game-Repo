@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://eu60c84sxykh"]
 
 [ext_resource type="Script" uid="uid://diykfrvwlcu1f" path="res://scripts/button.gd" id="1_ydosi"]
+[ext_resource type="Script" uid="uid://c0jc62wfp2qch" path="res://scenes/timer.gd" id="2_77pfx"]
 
 [node name="Order1" type="Control" unique_id=1298157846]
 layout_mode = 3
@@ -39,4 +40,26 @@ offset_bottom = 225.0
 mouse_filter = 2
 text = "PLACEHOLDER"
 
+[node name="ID" type="Node3D" parent="." unique_id=1678734419]
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=37019258]
+layout_mode = 0
+offset_left = 2.9999998
+offset_top = 157.0
+offset_right = 43.0
+offset_bottom = 197.0
+scale = Vector2(3.08, 1)
+color = Color(0, 0.40619966, 0.5057472, 1)
+
+[node name="Timer" type="RichTextLabel" parent="." unique_id=570306792]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 164.0
+offset_right = 207.0
+offset_bottom = 364.0
+mouse_filter = 2
+text = "PLACEHOLDER"
+script = ExtResource("2_77pfx")
+
 [connection signal="toggled" from="Button" to="Button" method="_on_toggled"]
+[connection signal="timer_finished" from="Timer" to="Button" method="_on_timer_finished"]

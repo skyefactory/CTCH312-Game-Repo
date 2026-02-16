@@ -2,6 +2,7 @@ extends Node
 
 @onready var OrderPanel = $"../GUIPanel3D/SubViewport/GridContainer"
 const OrderUIScene: PackedScene = preload("res://scenes/OrderOnScreenUI.tscn")
+var rng = RandomNumberGenerator.new()
 
 # List of all current orders in the game
 var orders: Array[Order] = []
@@ -11,19 +12,29 @@ var Recipies = [
 	["Burger", ["Cheese", "Double", "Lettuce", "Silly Sauce"]]
 ]
 
+var day_started = false
+var day_ended = false
+
 # Keep track of the current active order
 var active_order_id: int = -1
 
-# ------------------------
-# READY
-# ------------------------
-func _ready():
-	#placeholder logic to setup initial orders for testing
-	for i in range(3):
-		#Creates a new order and adds it to the Orders list
-		var order = createOrder()
+var accum = 0.0
+var timer = 0
 
+func pick_random_time() -> int:
+	return rng.randi_range(20,40)
 
+func _process(delta: float) -> void:
+	if day_started:
+		if timer == 0:
+			timer = pick_random_time()
+		print(timer)
+		accum += delta
+		if(accum >= timer):
+			createOrder()
+			accum = 0.0
+			timer = pick_random_time()
+	
 
 # ------------------------
 # ORDER MANAGEMENT
@@ -103,3 +114,13 @@ func print_orders() -> void:
 	for order in orders:
 		print("ID:", order.id, "Status:", order.status, "Base:", order.base, "Variations:", order.variations)
 	print("----------------")
+
+
+func _on_day_end() -> void:
+	day_ended = true
+	pass # Replace with function body.
+
+func _on_day_start() -> void:
+	day_started = true
+	createOrder() #initial first order
+	pass # Replace with function body.

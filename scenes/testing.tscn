@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c7i4wqiffs62l" path="res://scenes/griddle.tscn" id="2_3dx25"]
 [ext_resource type="Script" uid="uid://cic6pigase4kq" path="res://scripts/player_movement.gd" id="3_l6grw"]
 [ext_resource type="Script" uid="uid://ybco1dh7xlee" path="res://scenes/order_manager.gd" id="4_kri1i"]
+[ext_resource type="FontFile" uid="uid://cm2qk2js6qaml" path="res://elegant.woff" id="6_5qbqa"]
 [ext_resource type="Script" uid="uid://c8stcr5blv7sf" path="res://scenes/daytimer.gd" id="6_kri1i"]
 [ext_resource type="PackedScene" uid="uid://cgumsdnkyal2d" path="res://scenes/gui_panel_3d.tscn" id="7_gi1h7"]
 
@@ -103,5 +104,9 @@ text = "PLACEHOLDER"
 [node name="Label" type="Label" parent="." unique_id=2015302826]
 offset_right = 40.0
 offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("6_5qbqa")
 text = "7:45 AM"
 script = ExtResource("6_kri1i")
+
+[connection signal="day_end" from="Label" to="OrderManager" method="_on_day_end"]
+[connection signal="day_start" from="Label" to="OrderManager" method="_on_day_start"]

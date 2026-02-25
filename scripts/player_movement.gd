@@ -1,4 +1,5 @@
 class_name Player extends CharacterBody3D
+
 @onready var interact_label: Label = %InteractLabel
 func _on_show_prompt(text: String):
 	interact_label.text = text

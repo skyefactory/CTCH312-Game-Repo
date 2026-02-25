@@ -23,11 +23,11 @@ func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("drop_item"): handle_drop()
 		
 func add_inventory_item(item : Item) -> bool:
-	if item == null or item.qty <= 0: return false
-	print(str(item.world_scene))
+	#is the item null, or is the quantity 0 or less? do not add item
+	if item == null or item.qty <= 0: return false 
+	#
 	var can_pickup : bool = add_stackable_item(item);
-	if item.qty <= 0:
-		return true;
+	
 	for i in inventory_size:
 		if items[i] != null:
 			continue;

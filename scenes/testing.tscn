@@ -103,20 +103,6 @@ _bundled = {
 [node name="Test Scene" type="Node3D" unique_id=1322774428]
 script = ExtResource("1_3dx25")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=290325522]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -2.5
-offset_top = -2.5
-offset_right = 2.5
-offset_bottom = 2.5
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
 [node name="Griddle" parent="." unique_id=1082305125 instance=ExtResource("2_3dx25")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 11.905416, -1.3276114, 18.36706)
 
@@ -155,64 +141,90 @@ environment = SubResource("Environment_5qbqa")
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
-[node name="InteractLabel" type="Label" parent="." unique_id=1551062903]
-unique_name_in_owner = true
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -11.5
-offset_right = 20.0
-offset_bottom = 11.5
-grow_horizontal = 2
-grow_vertical = 2
-text = "PLACEHOLDER"
-
-[node name="DayTimer" type="Label" parent="." unique_id=2015302826]
-offset_right = 40.0
-offset_bottom = 23.0
-theme_override_fonts/font = ExtResource("6_5qbqa")
-text = "7:45 AM"
-script = ExtResource("6_kri1i")
-
 [node name="TestUncookedPatty" parent="." unique_id=564607848 node_paths=PackedStringArray("inv") instance=ExtResource("8_8mr64")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.96169, 2.0433006, -11.022032)
-inv = NodePath("../ItemList")
+inv = NodePath("../GameUI/InventoryList")
 item_name = "Uncooked Patty"
 world_scene = SubResource("PackedScene_ci1tm")
 
 [node name="TestBottomBun" parent="." unique_id=502264939 node_paths=PackedStringArray("inv") instance=ExtResource("9_utrvu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.10089, 2.0433006, -11.022032)
-inv = NodePath("../ItemList")
+inv = NodePath("../GameUI/InventoryList")
 item_name = "Bottom Bun"
 world_scene = SubResource("PackedScene_0lbey")
 
 [node name="TestTopBun" parent="." unique_id=842358485 node_paths=PackedStringArray("inv") instance=ExtResource("10_yh20h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0433006, -11.022032)
-inv = NodePath("../ItemList")
+inv = NodePath("../GameUI/InventoryList")
 item_name = "Top Bun"
 world_scene = SubResource("PackedScene_pm4hl")
 
-[node name="ItemList" type="ItemList" parent="." unique_id=335766266 node_paths=PackedStringArray("player")]
-offset_left = 1037.0
-offset_top = 17.0
+[node name="GameUI" type="Control" parent="." unique_id=1957543720]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Crosshair" type="ColorRect" parent="GameUI" unique_id=290325522]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 553.5
+offset_top = 301.5
+offset_right = 558.5
+offset_bottom = 306.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="InteractLabel" type="Label" parent="GameUI" unique_id=1551062903]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 499.5
+offset_top = 292.5
+offset_right = 612.5
+offset_bottom = 315.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "PLACEHOLDER"
+
+[node name="DayTimer" type="Label" parent="GameUI" unique_id=2015302826]
+layout_mode = 0
+offset_right = 55.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("6_5qbqa")
+text = "7:45 AM"
+script = ExtResource("6_kri1i")
+
+[node name="InventoryList" type="ItemList" parent="GameUI" unique_id=335766266 node_paths=PackedStringArray("player")]
+layout_mode = 0
+offset_left = 1072.0
+offset_top = 53.0
 offset_right = 1129.0
-offset_bottom = 535.0
+offset_bottom = 592.0
 allow_reselect = true
 allow_rmb_select = true
 allow_search = false
+auto_width = true
 auto_height = true
-max_columns = 2
 same_column_width = true
-fixed_column_width = 55
+fixed_column_width = 35
 icon_mode = 0
-fixed_icon_size = Vector2i(50, 50)
+fixed_icon_size = Vector2i(26, 26)
 script = ExtResource("12_uf0dc")
 blank_icon = ExtResource("16_fme2p")
-player = NodePath("../Player")
+player = NodePath("../../Player")
 
-[connection signal="day_end" from="DayTimer" to="OrderManager" method="_on_day_end"]
-[connection signal="day_start" from="DayTimer" to="OrderManager" method="_on_day_start"]
+[node name="Inventory" type="Node" parent="." unique_id=757756399]
+
+[connection signal="day_end" from="GameUI/DayTimer" to="OrderManager" method="_on_day_end"]
+[connection signal="day_start" from="GameUI/DayTimer" to="OrderManager" method="_on_day_start"]

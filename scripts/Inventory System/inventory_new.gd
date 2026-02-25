@@ -3,48 +3,83 @@ extends Node
 var slots: Array[InventorySlot] = [] # The inventory slots of the player, this will be used to store the items in the player's inventory
 var inventory_size: int = 9 # size of inventory
 var selected_slot: int = -1 # current selected item in item list
-@export var hotbar: ItemList # reference to the item list
-@export var blank_icon: Texture2D # blank icon for empty inventory slots
-
+@export var player: Node3D # reference to the player node for dropping items in the world
+signal inventory_changed
+signal selected_item_changed
+var held_item: InventorySlot
 func _ready() -> void:
-    for i in inventory_size:
+    for i in range(inventory_size):
         var slot = InventorySlot.new()
         slots.append(slot)
-        hotbar.add_item(" ", blank_icon)
+        emit_signal("inventory_changed")
 
 func _process(_delta: float) -> void:
+    handle_slot_input()
+    if selected_slot >=0 and selected_slot < inventory_size:
+        held_item = slots[selected_slot]
     pass
 
-func add_inventory_item(item: ItemData, quantity: int) -> bool:
-    if item == null or quantity <= 0: return false
-    var can_item_be_added: bool = false;
+func handle_slot_input() -> void:
+    for i in range(inventory_size):
+        if Input.is_action_just_pressed("slot_" + str(i+1)):
+            selected_slot = i
+            emit_signal("selected_item_changed", selected_slot)
 
-func add_item_to_stack(item: WorldItem) -> bool:
-    if item == null or item.Quantity <= 0: return false
-    var can_item_be_added: bool = false;
+func remove_selected_item() -> InventorySlot:
+    if selected_slot < 0:
+        return null
+		
+    var slot = slots[selected_slot]
+    if slot.item == null:
+        return null
+		
+    var removed = slot
+    slots[selected_slot] = InventorySlot.new()
+	
+    emit_signal("inventory_changed")
+    return removed
 
-    if item.item_data.MaxStackSize > 1:
-        for slot in inventory_size:
-            #check if the slot is empty, if it is empty continue to next slot
+func add_inventory_item(item: ItemData, quantity: int) -> int:
+    assert(item != null and quantity > 0,
+        "Invalid item or quantity")
+    var remaining: int = quantity
+    remaining = add_item_to_stack(item, remaining)
+
+    if remaining <= 0:
+        return 0
+    for slot in range(inventory_size):
+        if slots[slot].item != null: continue
+
+        slots[slot].item = item
+        slots[slot].quantity = remaining
+        emit_signal("inventory_changed")
+        return 0
+    return remaining
+
+func add_item_to_stack(item: ItemData, quantity: int) -> int:
+    assert(item != null and quantity > 0,
+        "Invalid item or quantity")
+    var remaining: int = quantity
+
+    if item.MaxStackSize > 1:
+        for slot in range(inventory_size):
             if slots[slot].item == null: 
                 continue
-            #check if the item in the slot is the same as the item we are trying to add, 
-            #if it is not the same continue to next slot
-            if slots[slot].item.ID != item.item_data.ID:
+            if slots[slot].item.ID != item.ID:
                 continue
-            #check if the slot is already full, if it is full continue to next slot
-            if slots[slot].quantity >= item.item_data.MaxStackSize:
+            if slots[slot].quantity >= item.MaxStackSize:
                 continue
-            #check if adding the item to the slot would exceed the max stack size, 
-            #if it would exceed the max stack size add as much as possible to the slot 
-            #and reduce the quantity of the item we are trying to add by the amount 
-            #we added to the slot
-            if slots[slot].quantity + item.Quantity > item.item_data.MaxStackSize:
-                var amount_to_add: int = item.item_data.MaxStackSize - slots[slot].quantity
+            
+            if slots[slot].quantity + remaining > item.MaxStackSize:
+                var amount_to_add: int = item.MaxStackSize - slots[slot].quantity
                 slots[slot].quantity += amount_to_add
-                item.Quantity -= amount_to_add
-                can_item_be_added = true
-                hotbar.set_item_text(slot, str(slots[slot].quantity))
+                remaining -= amount_to_add
+                emit_signal("inventory_changed")
                 continue
+            
+            slots[slot].quantity += remaining
+            remaining = 0
+            emit_signal("inventory_changed")
+            break
 
-                
+    return remaining

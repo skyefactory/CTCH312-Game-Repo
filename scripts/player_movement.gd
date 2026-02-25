@@ -1,5 +1,5 @@
 class_name Player extends CharacterBody3D
-
+@onready var inventory: Inventory = $Inventory
 @onready var interact_label: Label = %InteractLabel
 func _on_show_prompt(text: String):
 	interact_label.text = text
@@ -43,8 +43,24 @@ func _physics_process(delta: float) -> void:
 		if mouse_captured: release_mouse()
 		else: capture_mouse()
 	if Input.is_action_just_pressed(&"jump"): jumping = true
+	if Input.is_action_just_pressed("drop_item"): drop_item()
 	velocity = _walk(delta) + _gravity(delta) + _jump(delta)
 	move_and_slide()
+
+func drop_item():
+	var slot = inventory.remove_selected_item()
+	if slot == null:
+		return
+		
+	var world_scene = slot.item.WorldModel
+	var world_item = world_scene.instantiate()
+	get_tree().current_scene.add_child(world_item)
+
+	world_item.Data = slot.item
+	world_item.Quantity = slot.quantity
+
+	var forward = -global_transform.basis.z
+	world_item.global_position = global_position + forward * 2.0
 
 func capture_mouse() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

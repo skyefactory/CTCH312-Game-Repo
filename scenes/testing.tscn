@@ -26,12 +26,12 @@ height = 10.0
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 
-[sub_resource type="Sky" id="Sky_kri1i"]
+[sub_resource type="Sky" id="Sky_8mr64"]
 sky_material = SubResource("ProceduralSkyMaterial_nuoa6")
 
 [sub_resource type="Environment" id="Environment_5qbqa"]
 background_mode = 2
-sky = SubResource("Sky_kri1i")
+sky = SubResource("Sky_8mr64")
 tonemap_mode = 2
 glow_enabled = true
 
@@ -44,11 +44,10 @@ transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 11.9
 [node name="Floor" type="StaticBody3D" parent="." unique_id=2097325185]
 
 [node name="FloorMesh" type="MeshInstance3D" parent="Floor" unique_id=1153245243]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.5583639, 0, -1.6680696, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.5583639, 0, 0, 0)
 mesh = SubResource("BoxMesh_5qbqa")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor" unique_id=23022657]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.011978149, -1.6565725, 0.05971527)
 shape = SubResource("BoxShape3D_nuoa6")
 
 [node name="OrderManager" type="Node" parent="." unique_id=837070661]
@@ -66,11 +65,11 @@ metadata/_custom_type_script = "uid://8p45qiffxeuj"
 [node name="Camera" type="Camera3D" parent="Player" unique_id=1714575678]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7076263, 0)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1448940888]
+[node name="PlayerCollider" type="CollisionShape3D" parent="Player" unique_id=1448940888]
 shape = SubResource("CapsuleShape3D_3dx25")
 
-[node name="GUIPanel3D" parent="." unique_id=254680086 instance=ExtResource("7_gi1h7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -22.407)
+[node name="GUIPanel3D" parent="." unique_id=1054725199 instance=ExtResource("7_gi1h7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, -22)
 
 [node name="Env Lighting" type="Node3D" parent="." unique_id=570604838]
 
@@ -81,14 +80,13 @@ environment = SubResource("Environment_5qbqa")
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
 shadow_enabled = true
 
-[node name="GameUI" type="Control" parent="." unique_id=1957543720 node_paths=PackedStringArray("inventory", "hotbar")]
+[node name="GameUI" type="Control" parent="." unique_id=1957543720 node_paths=PackedStringArray("inventory")]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("7_j8asw")
 inventory = NodePath("../Player/Inventory")
-hotbar = NodePath("InventoryList")
 blank_icon = ExtResource("16_fme2p")
 
 [node name="Crosshair" type="ColorRect" parent="GameUI" unique_id=290325522]
@@ -131,7 +129,7 @@ theme_override_fonts/font = ExtResource("6_5qbqa")
 text = "7:45 AM"
 script = ExtResource("6_kri1i")
 
-[node name="InventoryList" type="ItemList" parent="GameUI" unique_id=335766266]
+[node name="Hotbar" type="ItemList" parent="GameUI" unique_id=335766266]
 layout_mode = 0
 offset_left = 1072.0
 offset_top = 53.0

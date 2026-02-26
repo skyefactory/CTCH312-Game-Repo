@@ -1,0 +1,114 @@
+[gd_scene format=3 uid="uid://dyfkigudqgyu0"]
+
+[ext_resource type="Script" uid="uid://cic6pigase4kq" path="res://scripts/Player.gd" id="1_tefeu"]
+[ext_resource type="Script" uid="uid://8p45qiffxeuj" path="res://scripts/Inventory System/inventory_new.gd" id="2_o6xl0"]
+[ext_resource type="Texture2D" uid="uid://d257ffddlidy4" path="res://others/icon.svg" id="2_tipki"]
+[ext_resource type="Script" uid="uid://d0nyku8axrdyg" path="res://scripts/ui_controller.gd" id="3_tipki"]
+[ext_resource type="Texture2D" uid="uid://gerluh6y40jv" path="res://others/blank.png" id="4_85g3d"]
+[ext_resource type="FontFile" uid="uid://cm2qk2js6qaml" path="res://others/elegant.woff" id="5_choun"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_eb6dy"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tefeu"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_kri1i"]
+sky_material = SubResource("ProceduralSkyMaterial_tefeu")
+
+[sub_resource type="Environment" id="Environment_o6xl0"]
+background_mode = 2
+sky = SubResource("Sky_kri1i")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Main" type="Node3D" unique_id=877551196]
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=1469502765]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 0)
+script = ExtResource("1_tefeu")
+test_icon = ExtResource("2_tipki")
+metadata/_custom_type_script = "uid://cic6pigase4kq"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=294288763]
+shape = SubResource("CapsuleShape3D_eb6dy")
+
+[node name="Inventory" type="Node" parent="Player" unique_id=1717588356]
+script = ExtResource("2_o6xl0")
+metadata/_custom_type_script = "uid://8p45qiffxeuj"
+
+[node name="Camera" type="Camera3D" parent="Player" unique_id=1591740886]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7076263, 0)
+
+[node name="UIController" type="Control" parent="." unique_id=1560351877 node_paths=PackedStringArray("inventory")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("3_tipki")
+inventory = NodePath("../Player/Inventory")
+blank_icon = ExtResource("4_85g3d")
+metadata/_custom_type_script = "uid://d0nyku8axrdyg"
+
+[node name="Hotbar" type="ItemList" parent="UIController" unique_id=1963280098]
+layout_mode = 0
+offset_left = 1072.0
+offset_top = 53.0
+offset_right = 1129.0
+offset_bottom = 592.0
+allow_reselect = true
+allow_rmb_select = true
+allow_search = false
+auto_width = true
+auto_height = true
+same_column_width = true
+fixed_column_width = 35
+icon_mode = 0
+fixed_icon_size = Vector2i(24, 24)
+
+[node name="Crosshair" type="ColorRect" parent="UIController" unique_id=1946197109]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 553.5
+offset_top = 301.5
+offset_right = 558.5
+offset_bottom = 306.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="InteractLabel" type="Label" parent="UIController" unique_id=213668977]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 499.5
+offset_top = 292.5
+offset_right = 612.5
+offset_bottom = 315.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "PLACEHOLDER"
+
+[node name="DayTimer" type="Label" parent="UIController" unique_id=2071210662]
+layout_mode = 0
+offset_right = 55.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("5_choun")
+text = "7:45 AM"
+
+[node name="Env Lighting" type="Node3D" parent="." unique_id=1637147134]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Env Lighting" unique_id=1974003407]
+environment = SubResource("Environment_o6xl0")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Env Lighting" unique_id=302638490]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true

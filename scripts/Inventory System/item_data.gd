@@ -17,5 +17,5 @@ var cook_result: ItemData = null # If this item is cookable, this variable will 
 #if they are holding a cooked patty, they cannot interact with the griddle since there is no cook result for the cooked patty
 var time_to_cook: float = 0.0 # Time in seconds it takes to cook this item, if this item is not cookable this should be set to 0
 
-func isCookable() -> bool:
+func isCookable() -> bool: # quick check to see if cookable. Can be used for interactions with kitchen items.
     return cook_result != null

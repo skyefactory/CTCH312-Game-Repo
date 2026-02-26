@@ -1,4 +1,4 @@
-class_name Inventory
+class_name InventoryOLD
 #https://www.youtube.com/watch?v=2F0BH1uZ87g
 extends ItemList
 
@@ -28,6 +28,8 @@ func add_inventory_item(item : Item) -> bool:
 	#
 	var can_pickup : bool = add_stackable_item(item);
 	
+	if item.qty <= 0:
+		return true;
 	for i in inventory_size:
 		if items[i] != null:
 			continue;

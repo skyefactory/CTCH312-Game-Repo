@@ -2,8 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bex4481iit5t" path="res://scripts/closegame.gd" id="1_3dx25"]
 [ext_resource type="PackedScene" uid="uid://c7i4wqiffs62l" path="res://scenes/griddle.tscn" id="2_3dx25"]
-[ext_resource type="Script" uid="uid://cic6pigase4kq" path="res://scripts/player_movement.gd" id="3_l6grw"]
+[ext_resource type="Script" uid="uid://cic6pigase4kq" path="res://scripts/Player.gd" id="3_l6grw"]
 [ext_resource type="Script" uid="uid://ybco1dh7xlee" path="res://scripts/order_manager.gd" id="4_kri1i"]
+[ext_resource type="Script" uid="uid://8p45qiffxeuj" path="res://scripts/Inventory System/inventory_new.gd" id="5_0p782"]
 [ext_resource type="FontFile" uid="uid://cm2qk2js6qaml" path="res://others/elegant.woff" id="6_5qbqa"]
 [ext_resource type="Script" uid="uid://c8stcr5blv7sf" path="res://scripts/daytimer.gd" id="6_kri1i"]
 [ext_resource type="PackedScene" uid="uid://cgumsdnkyal2d" path="res://scenes/gui_panel_3d.tscn" id="7_gi1h7"]
@@ -123,6 +124,10 @@ script = ExtResource("4_kri1i")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.2454286, 0)
 script = ExtResource("3_l6grw")
 
+[node name="Inventory" type="Node" parent="Player" unique_id=392217953]
+script = ExtResource("5_0p782")
+metadata/_custom_type_script = "uid://8p45qiffxeuj"
+
 [node name="Camera" type="Camera3D" parent="Player" unique_id=1714575678]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.7076263, 0)
 
@@ -143,21 +148,21 @@ shadow_enabled = true
 
 [node name="TestUncookedPatty" parent="." unique_id=564607848 node_paths=PackedStringArray("inv") instance=ExtResource("8_8mr64")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.96169, 2.0433006, -11.022032)
-inv = NodePath("../GameUI/InventoryList")
 item_name = "Uncooked Patty"
 world_scene = SubResource("PackedScene_ci1tm")
+inv = NodePath("../GameUI/InventoryList")
 
 [node name="TestBottomBun" parent="." unique_id=502264939 node_paths=PackedStringArray("inv") instance=ExtResource("9_utrvu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.10089, 2.0433006, -11.022032)
-inv = NodePath("../GameUI/InventoryList")
 item_name = "Bottom Bun"
 world_scene = SubResource("PackedScene_0lbey")
+inv = NodePath("../GameUI/InventoryList")
 
 [node name="TestTopBun" parent="." unique_id=842358485 node_paths=PackedStringArray("inv") instance=ExtResource("10_yh20h")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0433006, -11.022032)
-inv = NodePath("../GameUI/InventoryList")
 item_name = "Top Bun"
 world_scene = SubResource("PackedScene_pm4hl")
+inv = NodePath("../GameUI/InventoryList")
 
 [node name="GameUI" type="Control" parent="." unique_id=1957543720]
 layout_mode = 3
@@ -223,8 +228,6 @@ fixed_icon_size = Vector2i(26, 26)
 script = ExtResource("12_uf0dc")
 blank_icon = ExtResource("16_fme2p")
 player = NodePath("../../Player")
-
-[node name="Inventory" type="Node" parent="." unique_id=757756399]
 
 [connection signal="day_end" from="GameUI/DayTimer" to="OrderManager" method="_on_day_end"]
 [connection signal="day_start" from="GameUI/DayTimer" to="OrderManager" method="_on_day_start"]

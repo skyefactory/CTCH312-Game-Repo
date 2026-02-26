@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://dyfkigudqgyu0"]
 
-[ext_resource type="Script" uid="uid://cic6pigase4kq" path="res://scripts/Player.gd" id="1_tefeu"]
+[ext_resource type="Script" uid="uid://c2ke1qko84lnb" path="res://scripts/Player/Player.gd" id="1_tefeu"]
 [ext_resource type="Script" uid="uid://8p45qiffxeuj" path="res://scripts/Inventory System/inventory_new.gd" id="2_o6xl0"]
 [ext_resource type="Texture2D" uid="uid://d257ffddlidy4" path="res://others/icon.svg" id="2_tipki"]
-[ext_resource type="Script" uid="uid://d0nyku8axrdyg" path="res://scripts/ui_controller.gd" id="3_tipki"]
 [ext_resource type="Texture2D" uid="uid://gerluh6y40jv" path="res://others/blank.png" id="4_85g3d"]
+[ext_resource type="Script" uid="uid://c3br6dlabyqri" path="res://scripts/UI/ui_controller.gd" id="4_tefeu"]
 [ext_resource type="FontFile" uid="uid://cm2qk2js6qaml" path="res://others/elegant.woff" id="5_choun"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_eb6dy"]
@@ -45,7 +45,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("3_tipki")
+script = ExtResource("4_tefeu")
 inventory = NodePath("../Player/Inventory")
 blank_icon = ExtResource("4_85g3d")
 metadata/_custom_type_script = "uid://d0nyku8axrdyg"

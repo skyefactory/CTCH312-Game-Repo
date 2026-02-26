@@ -1,4 +1,5 @@
-class_name Player extends CharacterBody3D
+extends CharacterBody3D
+class_name Player
 @onready var inventory: Inventory = $Inventory
 @export var test_icon: Texture2D
 

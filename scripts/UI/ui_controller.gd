@@ -4,6 +4,8 @@ class_name UIController
 @export var inventory: Node
 @export var blank_icon: Texture2D
 
+@export var game_manager: GameManager
+
 @onready var hotbar: ItemList = $Hotbar
 @onready var daytimer_label: Label = $DayTimer
 @onready var interact_label: Label = $InteractLabel
@@ -22,7 +24,7 @@ func _ready():
 	inventory.inventory_changed.connect(update_hotbar)
 	inventory.selected_item_changed.connect(highlight_slot)
 
-
+	game_manager.game_paused.connect(on_game_paused)
 
 	update_hotbar()
 
@@ -54,10 +56,14 @@ func on_time_changed(hour: int, minute: int, pm: bool, spedup: bool):
 		display_hour = 12
 	var am_pm = "PM" if pm else "AM"
 	if spedup:
-		daytimer_label.text = "%02d:%02d %s ▶▶" % [display_hour, minute, am_pm]
+		daytimer_label.text = "%01d:%02d %s ▶▶" % [display_hour, minute, am_pm]
 	else:
-		daytimer_label.text = "%02d:%02d %s" % [display_hour, minute, am_pm]
+		daytimer_label.text = "%01d:%02d %s" % [display_hour, minute, am_pm]
 
 
 func highlight_slot(index: int):
 	hotbar.select(index)    
+
+func on_game_paused():
+	# show the pause menu
+	pass

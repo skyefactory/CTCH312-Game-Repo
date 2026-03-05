@@ -19,6 +19,8 @@
 [ext_resource type="PackedScene" uid="uid://be7iys4ysjmhd" path="res://models/blend files/screen.blend" id="17_0ld40"]
 [ext_resource type="Script" uid="uid://bvk80mlofk6w4" path="res://scripts/Manager/screen_manager.gd" id="19_0ld40"]
 [ext_resource type="Script" uid="uid://dcu1s47u4jb32" path="res://scripts/Manager/state_manager.gd" id="19_gqmmt"]
+[ext_resource type="PackedScene" uid="uid://gj7q8sxwqyju" path="res://scenes/items/world_items/cheese.tscn" id="20_gqmmt"]
+[ext_resource type="PackedScene" uid="uid://b7a0gi778lsco" path="res://scenes/items/world_items/buns.tscn" id="22_jscy8"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_eb6dy"]
 
@@ -517,6 +519,11 @@ shape = SubResource("BoxShape3D_0ld40")
 [node name="model collision" type="CollisionShape3D" parent="Counter_Assembler" unique_id=942627781]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2550354, 0.16241455, 1.1529236)
 shape = SubResource("BoxShape3D_0ld40")
+
+[node name="Buns" parent="." unique_id=1379983220 instance=ExtResource("22_jscy8")]
+
+[node name="Cheese" parent="." unique_id=1925252719 instance=ExtResource("20_gqmmt")]
+transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0, 0)
 
 [connection signal="body_entered" from="Counter_Assembler/TriggerArea" to="Managers/UIController" method="_on_assembler_trigger_area_body_entered"]
 [connection signal="body_exited" from="Counter_Assembler/TriggerArea" to="Managers/UIController" method="_on_assembler_trigger_area_body_exited"]

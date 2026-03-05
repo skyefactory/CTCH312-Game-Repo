@@ -1,7 +1,7 @@
 extends Control
 class_name RecipeBlock
 
-@onready var custom_tooltip = $Tooptip # tooltip node - tooptip shows ingredients and whether the player has them or not
+@onready var custom_tooltip = $Tooltip # tooltip node - tooltip shows ingredients and whether the player has them or not
 @onready var tooltip_label = $Tooltip/TooltipLabel # tooltip label
 @onready var button = $StartCraftingButton # button to start crafting
 @onready var unavailable_overlay: TextureRect = $UnavailableCrossover # overlay to show when the recipe is unavailable

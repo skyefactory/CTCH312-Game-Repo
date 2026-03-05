@@ -62,17 +62,15 @@ func update_hotbar():
 	for i in range(inventory.inventory_size):
 		if i >= hotbar.get_item_count(): # Initial setup of hotbar icons and text
 			hotbar.add_item(" ", blank_icon)
-			hotbar.set_item_text(i, "0")
+			hotbar.set_item_text(i, "0/0")
 		var slot = inventory.slots[i]
 		if slot.item == null: # make sure the hotbar icon and text are blank if there is no item in the slot
 			hotbar.set_item_icon(i, blank_icon)
-			hotbar.set_item_text(i, "0")
+			hotbar.set_item_text(i, "0/0")
 		else: # update the hotbar icon and qty text to match the item in the slot
 			hotbar.set_item_icon(i, slot.item.Icon)
-			if slot.item.MaxStackSize > 1:
-				hotbar.set_item_text(i, str(slot.quantity))
-			else:
-				hotbar.set_item_text(i, "1")
+			var max_qty = slot.item.MaxStackSize
+			hotbar.set_item_text(i, "%d/%d" % [slot.quantity, max_qty])
 
 # function for when the day is started, could be used to trigger UI/Audio events
 func on_day_start():

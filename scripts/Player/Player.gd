@@ -28,7 +28,7 @@ var jump_vel: Vector3 # Jumping velocity
 
 var forward: Vector3 # forward direction for dropping items and moving
 
-var current_world_item: WorldItem
+var current_world_item: WorldItem # reference to the world item the player is currently looking at and can interact with, used for showing the interact label and picking up items.
 
 signal interact_target(show_label, text)
 
@@ -43,20 +43,20 @@ func raycast_from_crosshair() -> void:
 	#send out a ray from the center of the screen relative to where the camera is
 	var ray_origin = camera.project_ray_origin(screen_center)
 	var ray_direction = camera.project_ray_normal(screen_center)
-
+	# set up the ray query parameters
 	var query = PhysicsRayQueryParameters3D.create(
 		ray_origin,
 		ray_origin + ray_direction * 1000.0
 	)
 
-	query.collide_with_areas = true
-	query.collide_with_bodies = false
+	query.collide_with_areas = true # we want to only detect areas, as world items are areas and we don't want physics interference from rigidbodies getting in the way of ray detection.
+	query.collide_with_bodies = false # ignore physics bodies, we will add a collision exception to all physics bodies for the player to prevent interference with ray detection.
 	query.collision_mask = 2
 	#check what the ray intersected with.
 
-	var result = get_world_3d().direct_space_state.intersect_ray(query)
+	var result = get_world_3d().direct_space_state.intersect_ray(query) # perform the raycast and get the result
 
-	screen_manager.handle_ray_result(result)
+	screen_manager.handle_ray_result(result) # forward the raycast result to the screen manager so that it can determine if we are hovering over the screen and where the hit position is for UI interaction.
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -156,6 +156,7 @@ func _jump(delta: float) -> Vector3:
 	jump_vel = Vector3.ZERO if is_on_floor() or is_on_ceiling_only() else jump_vel.move_toward(Vector3.ZERO, gravity * delta)
 	return jump_vel
 
+# set the current world item the player can interact with, used for showing the interact label and picking up items.
 func set_world_item(world_item: WorldItem) -> void:
 	print("Set world item:", world_item, world_item.Data.Name)
 	current_world_item = world_item
@@ -163,7 +164,7 @@ func set_world_item(world_item: WorldItem) -> void:
 		emit_signal("interact_target", true, "Press E to pick up " + world_item.Data.Name) # show the interact label with the name of the item
 	else:
 		emit_signal("interact_target", false, "") # hide the interact label
-
+# clear the current world item the player can interact with, used for hiding the interact label when the player looks away from the item.
 func clear_world_item(world_item: WorldItem) -> void:
 	print("Clear world item:", world_item)
 	if current_world_item == world_item:

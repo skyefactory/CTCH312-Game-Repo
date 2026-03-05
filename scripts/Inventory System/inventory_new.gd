@@ -9,6 +9,7 @@ signal selected_item_changed # emitted when the player changes the inventory sel
 var held_item: InventorySlot # reference to the currently held item. Updated every frame.
 
 func _ready() -> void:
+	# Initialize the inventory with empty slots
 	for i in range(inventory_size):
 		var slot = InventorySlot.new()
 		slots.append(slot)
@@ -18,6 +19,12 @@ func _process(_delta: float) -> void:
 	handle_slot_input() # check for input to change selected slot
 	if selected_slot >=0 and selected_slot < inventory_size: #update held item reference
 		held_item = slots[selected_slot]
+	
+	#clear any 0 quantity items from the inventory
+	for i in range(inventory_size):
+		if slots[i].item != null and slots[i].quantity <= 0:
+			slots[i] = InventorySlot.new() # set the slot to a new empty slot
+			emit_signal("inventory_changed") # emit signal to update the UI 
 	pass
 
 # check for input to change the selected slot.
@@ -43,6 +50,26 @@ func remove_selected_item() -> InventorySlot:
 	emit_signal("selected_item_changed", selected_slot) # emit signal to update the UI selection
 	emit_signal("inventory_changed") # emit signal to update the UI since the inventory has changed
 	return removed # return the removed item so it can be dropped in the world or used in some way.
+
+# try to find the ID of a given item in the inventory, returns -1 if the item is not found in inventory.
+func get_id_by_item(item: ItemData) -> int:
+	for i in range(inventory_size):
+		if slots[i].item != null and slots[i].item.ID == item.ID:
+			return i
+	return -1
+
+# try and take an item from the inventory, reducing the quantity of that item in the inventory by the specified amount.
+func take_item(item: ItemData, quantity: int) -> void:
+	var slot_id = get_id_by_item(item) # get item slot if exists
+	print("Taking item: ", item.Name, " Quantity: ", quantity, " from slot: ", slot_id)
+	if slot_id != -1:
+		if slots[slot_id].quantity >= quantity: # check that there is enough of the item in the inventory to take the specified quantity
+			slots[slot_id].quantity -= quantity # take the quantity. If the item quantity reaches 0, it will be cleared from the inventory in the _process function.
+			emit_signal("inventory_changed")
+			return
+		else:
+			push_error("Tried to take more of an item than is in the inventory: " + item.Name) # push error if there was not enough in inventory.
+	push_error("Tried to take item that is not in inventory: " + item.Name) #usually by this point we would have already verified the item was in the inventory, so push error
 
 # adds an item to the inventory. 
 #Returns the amount of the item that could not be added 
@@ -108,3 +135,33 @@ func add_item_to_stack(item: ItemData, quantity: int) -> int:
 			break
 	# return any remaining quantity that could not be added.
 	return remaining
+
+# Check if the inventory contains all the specified items
+func has_items(required_items: Array[ItemData]) -> Dictionary:
+	var missing: Array[ItemData] = [] # any items that were not found in the inventory.
+	
+	for required_item in required_items: # go over each required item
+		var found_quantity: int = 0
+		
+		# Count how many of this item we have across all slots
+		for slot in slots:
+			if slot.item != null and slot.item.ID == required_item.ID:
+				found_quantity += slot.quantity
+		
+		# If we don't have at least 1, add to missing list
+		if found_quantity < 1:
+			missing.append(required_item)
+	
+	# return a dictionary. Key "has all" is true iff there are no missing items, and key "missing" is the list of any missing items.
+	return {
+		"has_all": missing.is_empty(),
+		"missing": missing
+	}
+
+# singular version of has_items for checking if the inventory contains at least 1 of a specific item.
+func has_item(item: ItemData) -> bool:
+	for slot in slots:
+		if slot.item != null and slot.item.ID == item.ID:
+			return true
+	return false
+

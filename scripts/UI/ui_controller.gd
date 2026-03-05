@@ -17,6 +17,8 @@ class_name UIController
 @onready var quit_button: Button = $PauseMenu/Quit
 @onready var resume_button: Button = $PauseMenu/Resume
 
+@onready var assembler_crafting_station: CraftingStation = $AssemblerCraftingStation
+
 var daytimer: DayTimer
 
 func _ready():
@@ -45,7 +47,7 @@ func _ready():
 	game_manager.update_orders_ui.connect(screen_manager.update_screen)
 
 
-
+# trigger to show the interaction label. Called by other scripts when they need it via signal.
 func toggle_interact_label(show_label: bool, text: String = ""):
 	print("Toggling interact label: ", show_label, text)
 	if show_label:
@@ -54,7 +56,9 @@ func toggle_interact_label(show_label: bool, text: String = ""):
 	else:
 		interact_label.hide()
 
+# update the inventory hotbar.
 func update_hotbar():
+	# go over each slot in the inventory and update the corresponding hotbar icon and text to match it.
 	for i in range(inventory.inventory_size):
 		if i >= hotbar.get_item_count(): # Initial setup of hotbar icons and text
 			hotbar.add_item(" ", blank_icon)
@@ -88,7 +92,7 @@ func on_time_changed(hour: int, minute: int, pm: bool, spedup: bool):
 	else:
 		daytimer_label.text = "%01d:%02d %s" % [display_hour, minute, am_pm]
 
-
+# select the slot in the ItemList.
 func highlight_slot(index: int):
 	if index >= 0 and index < hotbar.get_item_count():
 		hotbar.select(index)    
@@ -103,3 +107,16 @@ func on_game_paused(paused: bool):
 		pause_menu.hide()
 		pass
 	pass
+
+# trigger area for the assembler crafting station, shows the crafting UI when the player is within range and hides it when they leave range.
+func _on_assembler_trigger_area_body_entered(body: Node3D) -> void:
+	if body == player:
+		toggle_interact_label(true, "Press E to open counter crafting")
+		assembler_crafting_station.player_within_range = true
+
+# hide the crafting UI when the player leaves the trigger area.
+func _on_assembler_trigger_area_body_exited(body: Node3D) -> void:
+	if body == player:
+		toggle_interact_label(false)
+		assembler_crafting_station.hide()
+		assembler_crafting_station.player_within_range = false

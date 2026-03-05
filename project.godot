@@ -13,7 +13,7 @@ config_version=5
 config/name="The Cooking"
 run/main_scene="uid://dyfkigudqgyu0"
 config/features=PackedStringArray("4.6", "Forward Plus")
-config/icon="res://others/icon.svg"
+config/icon="res://others/textures/icon.svg"
 
 [dotnet]
 

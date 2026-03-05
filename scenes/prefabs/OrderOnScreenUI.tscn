@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://eu60c84sxykh"]
 
-[ext_resource type="Script" uid="uid://cnlg2k5iquqry" path="res://scripts/orderbutton.gd" id="1_77pfx"]
-[ext_resource type="Script" uid="uid://brooydsgo0ejl" path="res://scripts/timer.gd" id="2_77pfx"]
+[ext_resource type="Script" uid="uid://cnlg2k5iquqry" path="res://scripts/UI/orderbutton.gd" id="1_77pfx"]
+[ext_resource type="Script" uid="uid://brooydsgo0ejl" path="res://scripts/UI/order_ui_timer.gd" id="2_77pfx"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_77pfx"]
 

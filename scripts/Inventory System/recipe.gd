@@ -11,7 +11,7 @@ class_name Recipe
 #to craft this recipe
 @export var assemblable: bool = false #used for determining if this recipe can be made at the counter
 @export var drinkable: bool = false #used for determining if this recipe can be made at the drink station
-
+@export var time_to_craft: float = 5.0 # the time it takes to craft this recipe in seconds, this is used for the crafting timer in the crafting station
 func _init(ingredients_in: Array[ItemData] = [], result_in: ItemData = null) -> void:
     self.ingredients = ingredients_in
     self.result = result_in

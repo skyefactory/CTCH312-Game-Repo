@@ -1,0 +1,77 @@
+[gd_scene format=3 uid="uid://df0wu0cybcy5h"]
+
+[ext_resource type="Script" uid="uid://c2adhnywm1ael" path="res://scripts/Crafting System/crafting_station.gd" id="1_l5kdm"]
+
+[node name="CraftingStationUI" type="Control" unique_id=1728938586]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 538.0
+offset_top = 284.0
+offset_right = 578.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+script = ExtResource("1_l5kdm")
+
+[node name="StationName" type="Label" parent="." unique_id=1189991921]
+layout_mode = 0
+offset_left = -274.0
+offset_top = -123.0
+offset_right = -172.0
+offset_bottom = -100.0
+text = "StationName"
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=203809538]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -150.0
+offset_right = 300.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.5647059)
+
+[node name="ColorRect2" type="ColorRect" parent="." unique_id=1310416144]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -294.0
+offset_top = -121.0
+offset_right = 296.0
+offset_bottom = 179.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 0.034555048)
+color = Color(0, 0, 0, 0.5647059)
+
+[node name="GridContainer" type="GridContainer" parent="." unique_id=2041708282]
+layout_mode = 1
+offset_left = -266.0
+offset_top = -76.0
+offset_right = 304.0
+offset_bottom = 154.0
+theme_override_constants/h_separation = 30
+theme_override_constants/v_separation = 225
+columns = 4
+
+[node name="CloseButton" type="Button" parent="." unique_id=120117707]
+layout_mode = 0
+offset_left = 292.0
+offset_top = -127.0
+offset_right = 316.0
+offset_bottom = -102.0
+theme_override_font_sizes/font_size = 12
+text = " X "

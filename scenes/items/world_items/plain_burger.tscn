@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://j0v5tdjwn0bj" path="res://scripts/Inventory System/world_item.gd" id="1_cvdfa"]
 [ext_resource type="Resource" uid="uid://dsx7kjql1u8ss" path="res://scenes/items/item data/buns.tres" id="2_q7qpj"]
-[ext_resource type="Script" uid="uid://ctygqqlb35bdd" path="res://scripts/ignore_player.gd" id="3_5r23v"]
+[ext_resource type="Script" uid="uid://ctygqqlb35bdd" path="res://scripts/misc/ignore_player.gd" id="3_5r23v"]
 [ext_resource type="PackedScene" uid="uid://cu4oqdf3hm6ik" path="res://models/blend files/buns.blend" id="4_syhnx"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_0ai3j"]

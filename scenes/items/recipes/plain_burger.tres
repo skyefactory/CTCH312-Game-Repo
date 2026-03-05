@@ -11,4 +11,5 @@ script = ExtResource("2_pmypb")
 ingredients = Array[ExtResource("1_g6546")]([ExtResource("2_o6di4"), ExtResource("3_yxem1")])
 result = ExtResource("4_yxem1")
 assemblable = true
+time_to_craft = 10.0
 metadata/_custom_type_script = "uid://csngmnnwm6r3y"

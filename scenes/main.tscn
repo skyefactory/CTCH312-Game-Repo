@@ -20,7 +20,9 @@
 [ext_resource type="Script" uid="uid://bvk80mlofk6w4" path="res://scripts/Manager/screen_manager.gd" id="19_0ld40"]
 [ext_resource type="Script" uid="uid://dcu1s47u4jb32" path="res://scripts/Manager/state_manager.gd" id="19_gqmmt"]
 [ext_resource type="PackedScene" uid="uid://gj7q8sxwqyju" path="res://scenes/items/world_items/cheese.tscn" id="20_gqmmt"]
+[ext_resource type="PackedScene" uid="uid://bb8sjm7yt8j5q" path="res://scenes/items/world_items/cooked_patty.tscn" id="21_jscy8"]
 [ext_resource type="PackedScene" uid="uid://b7a0gi778lsco" path="res://scenes/items/world_items/buns.tscn" id="22_jscy8"]
+[ext_resource type="PackedScene" uid="uid://bl6f3p03ytljn" path="res://models/blend files/griddle.blend" id="23_pm3ni"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_eb6dy"]
 
@@ -162,6 +164,9 @@ size = Vector3(4, 2.5, 0.1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0ld40"]
 size = Vector3(2.124817, 3.1622314, 6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y6deb"]
+size = Vector3(1.2269287, 1.6210938, 1.5784912)
 
 [node name="Main" type="Node3D" unique_id=877551196]
 
@@ -520,10 +525,26 @@ shape = SubResource("BoxShape3D_0ld40")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2550354, 0.16241455, 1.1529236)
 shape = SubResource("BoxShape3D_0ld40")
 
-[node name="Buns" parent="." unique_id=1379983220 instance=ExtResource("22_jscy8")]
+[node name="Cheese" parent="." unique_id=1379983220 instance=ExtResource("20_gqmmt")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 0, 5.677705)
+Quantity = 3
 
-[node name="Cheese" parent="." unique_id=1925252719 instance=ExtResource("20_gqmmt")]
-transform = Transform3D(0.125, 0, 0, 0, 0.125, 0, 0, 0, 0.125, 0, 0, 0)
+[node name="CookedPatty" parent="." unique_id=624944550 instance=ExtResource("21_jscy8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2604797, 0, 8.133186)
+Quantity = 3
+
+[node name="Buns" parent="." unique_id=1402957114 instance=ExtResource("22_jscy8")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 7.531898)
+Quantity = 2
+
+[node name="Griddle" type="StaticBody3D" parent="." unique_id=2037888014]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.023325, 0, -2.4164305)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Griddle" unique_id=423284332]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0051879883, 0.31054688, -0.05230713)
+shape = SubResource("BoxShape3D_y6deb")
+
+[node name="griddle" parent="Griddle" unique_id=972458142 instance=ExtResource("23_pm3ni")]
 
 [connection signal="body_entered" from="Counter_Assembler/TriggerArea" to="Managers/UIController" method="_on_assembler_trigger_area_body_entered"]
 [connection signal="body_exited" from="Counter_Assembler/TriggerArea" to="Managers/UIController" method="_on_assembler_trigger_area_body_exited"]

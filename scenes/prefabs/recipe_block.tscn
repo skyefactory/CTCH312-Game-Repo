@@ -38,12 +38,17 @@ offset_bottom = 64.0
 texture = ExtResource("3_3qyh0")
 
 [node name="RecipeName" type="Label" parent="." unique_id=676996510]
+clip_contents = true
 layout_mode = 0
 offset_left = 8.0
-offset_top = 20.0
+offset_top = 6.0
 offset_right = 121.0
-offset_bottom = 43.0
-text = "PLACEHOLDER"
+offset_bottom = 56.0
+text = "PLACEHOLDER PLACEHOLDER"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+clip_text = true
 
 [node name="StartCraftingButton" type="Button" parent="." unique_id=1030328173]
 layout_mode = 0

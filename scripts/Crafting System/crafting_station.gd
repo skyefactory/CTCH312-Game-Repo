@@ -57,9 +57,12 @@ func on_recipe_button_pressed(recipe: Recipe) -> void:
 		inventory.add_inventory_item(recipe.result, 1) # add to inventory
 		# Set the recipe status back to unavailable after crafting is done and item is collected.
 		crafting_dict[recipe]["status"] = recipe_status.UNAVAILABLE # update status to unavailable.
-		update_recipe_block_status(recipe)
 	elif crafting_dict[recipe]["status"] == recipe_status.CRAFTING:
 		cancel_crafting(recipe)
+	
+	update_crafting_status() # update the crafting status of all recipes after a button press in case the player's inventory has changed and that affects what they can craft.
+	update_recipe_block_status(recipe) # update the UI for this recipe block to reflect the new status after the button press.
+	
 
 #update recipe blocks with the current status. This is called whenever a recipe's status changes to update the UI to reflect the new status.
 func update_recipe_block_status(recipe: Recipe) -> void:

@@ -35,7 +35,7 @@ signal interact_target(show_label, text)
 func _ready() -> void: # capture the mouse
 	capture_mouse()
 
-func raycast_from_crosshair() -> void:
+func raycast_from_crosshair() ->PhysicsRayQueryParameters3D:
 	#get the exact center of the screen, this is where the crosshair is
 	var viewport_size = get_viewport().size
 	var screen_center = viewport_size / 2
@@ -48,6 +48,11 @@ func raycast_from_crosshair() -> void:
 		ray_origin,
 		ray_origin + ray_direction * 1000.0
 	)
+	return query
+
+
+func screen_raycast_from_crosshair() -> void:
+	var query = raycast_from_crosshair() # set up the ray query parameters for a raycast from the center of the screen
 
 	query.collide_with_areas = true # we want to only detect areas, as world items are areas and we don't want physics interference from rigidbodies getting in the way of ray detection.
 	query.collide_with_bodies = false # ignore physics bodies, we will add a collision exception to all physics bodies for the player to prevent interference with ray detection.
@@ -61,7 +66,7 @@ func raycast_from_crosshair() -> void:
 func _input(event):
 	if event is InputEventMouseButton:
 		# Refresh the hit position in the same input tick as the click.
-		raycast_from_crosshair()
+		screen_raycast_from_crosshair()
 		screen_manager.forward_mouse_button(event)
 	if event.is_action_pressed("interact") and current_world_item:
 		current_world_item.pickup()
@@ -82,7 +87,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("drop_item"): drop_item()
 	# calculate final velocity vector and move the player
 	velocity = _walk(delta) + _gravity(delta) + _jump(delta)
-	raycast_from_crosshair()
+	screen_raycast_from_crosshair()
 	move_and_slide()
 
 # drops the currently held item into the world as a pickup. 
@@ -120,6 +125,20 @@ func drop_item():
 
 	# place in front of the player
 	world_item.global_position = global_position + forward * 2.00
+
+#checks to see if it is colliding with a collider on layer 3 to determine if we are looking at an item we can interact with.
+func interactable_in_view() -> bool:
+	var query = raycast_from_crosshair() # set up the ray query parameters for a raycast from the center of the screen
+	query.collide_with_bodies = true
+	query.collide_with_areas = false
+	query.collision_mask = 4 # only collide with layer 3
+
+	var result = get_world_3d().direct_space_state.intersect_ray(query) # perform the raycast and get the result
+
+	if result and result.collider:
+		return true
+	return false
+
 
 
 # capture mouse

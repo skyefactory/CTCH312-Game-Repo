@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://biq4tmvocd104"]
+
+[ext_resource type="Script" uid="uid://c2h4urya43rqc" path="res://scripts/Inventory System/item_data.gd" id="1_1ici2"]
+
+[resource]
+script = ExtResource("1_1ici2")
+ID = 20
+Name = "Double Cheeseburger"
+Description = "double cheeseburger"
+MaxStackSize = 1
+metadata/_custom_type_script = "uid://c2h4urya43rqc"

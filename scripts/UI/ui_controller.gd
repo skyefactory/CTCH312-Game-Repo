@@ -109,12 +109,12 @@ func on_game_paused(paused: bool):
 # trigger area for the assembler crafting station, shows the crafting UI when the player is within range and hides it when they leave range.
 func _on_assembler_trigger_area_body_entered(body: Node3D) -> void:
 	if body == player:
-		toggle_interact_label(true, "Press E to open counter crafting")
 		assembler_crafting_station.player_within_range = true
+		player.set_interactable(assembler_crafting_station)
 
 # hide the crafting UI when the player leaves the trigger area.
 func _on_assembler_trigger_area_body_exited(body: Node3D) -> void:
 	if body == player:
-		toggle_interact_label(false)
+		player.clear_interactable(assembler_crafting_station)
 		assembler_crafting_station.hide()
 		assembler_crafting_station.player_within_range = false

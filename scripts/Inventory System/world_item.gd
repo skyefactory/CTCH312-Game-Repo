@@ -17,14 +17,25 @@ func _on_body_entered(body: Node) -> void:
 	if body is Player: # check if the body that entered is the player
 		is_player_in_range = true
 		player = body
-		player.set_world_item(self) # set the player's current world item reference to this item so the player can interact with it
+		player.set_interactable(self)
 	
 
 func _on_body_exited(body: Node) -> void:
 	if body is Player: # check if the body that exited is the player
 		is_player_in_range = false
-		player.clear_world_item(self) # clear the player's current world item reference since they are no longer in range
+		player.clear_interactable(self)
 		player = null 
+
+func can_interact(_interacting_player: Player) -> bool:
+	return Data != null
+
+func get_interaction_text(_interacting_player: Player) -> String:
+	if Data:
+		return "Press E to pick up %s" % Data.Name
+	return "Press E to pick up"
+
+func interact(_interacting_player: Player) -> void:
+	pickup()
 
 func pickup() -> void:
 	if player and Data: # make sure there is a player reference and item data

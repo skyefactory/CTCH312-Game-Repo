@@ -24,16 +24,6 @@ enum recipe_status {
 }
 
 func _process(delta):
-	if player_within_range: #show/hide the crafting station when the player is in range and presses the interact button.
-		if Input.is_action_just_released("interact"):
-			if self.visible: #Hide the UI
-				self.hide()
-				player.capture_mouse()
-			else: # Update and show the UI
-				update_crafting_status()
-				player.release_mouse()
-				self.show()
-	
 	#closes the UI when the close button is pressed
 	if close_button.is_pressed():
 		self.hide()
@@ -47,6 +37,22 @@ func _process(delta):
 				print("Crafting finished for recipe: " + recipe.result.Name)
 				crafting_dict[recipe]["status"] = recipe_status.READY # set the status to ready so the player can collect the item.
 				update_recipe_block_status(recipe) # update the UI for this recipe block to show that it is ready to collect.
+
+func can_interact(_interacting_player: Player) -> bool:
+	return player_within_range
+
+func get_interaction_text(_interacting_player: Player) -> String:
+	return "Press E to open %s" % station_name
+
+func interact(_interacting_player: Player) -> void:
+	if self.visible:
+		self.hide()
+		player.capture_mouse()
+	else:
+		update_crafting_status()
+		player.release_mouse()
+		player.interact_target.emit(false,"")
+		self.show()
 
 # when a recipe block is clicked on. Depending on the status of the recipe, we either start crafting, cancel crafting, or collect the crafted item.
 func on_recipe_button_pressed(recipe: Recipe) -> void:

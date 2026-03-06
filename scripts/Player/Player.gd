@@ -28,7 +28,7 @@ var jump_vel: Vector3 # Jumping velocity
 
 var forward: Vector3 # forward direction for dropping items and moving
 
-var current_world_item: WorldItem # reference to the world item the player is currently looking at and can interact with, used for showing the interact label and picking up items.
+var current_interactable: Node # currently active interactable target.
 
 signal interact_target(show_label, text)
 
@@ -68,8 +68,10 @@ func _input(event):
 		# Refresh the hit position in the same input tick as the click.
 		screen_raycast_from_crosshair()
 		screen_manager.forward_mouse_button(event)
-	if event.is_action_pressed("interact") and current_world_item:
-		current_world_item.pickup()
+	
+	#check to see if we have a current interactable and if the interact button was pressed
+	if event.is_action_pressed("interact") and current_interactable:
+		Interactable.interact(current_interactable, self)
 
 # handle mouse look input
 func _unhandled_input(event: InputEvent) -> void:
@@ -175,17 +177,15 @@ func _jump(delta: float) -> Vector3:
 	jump_vel = Vector3.ZERO if is_on_floor() or is_on_ceiling_only() else jump_vel.move_toward(Vector3.ZERO, gravity * delta)
 	return jump_vel
 
-# set the current world item the player can interact with, used for showing the interact label and picking up items.
-func set_world_item(world_item: WorldItem) -> void:
-	print("Set world item:", world_item, world_item.Data.Name)
-	current_world_item = world_item
-	if world_item and world_item.Data:
-		emit_signal("interact_target", true, "Press E to pick up " + world_item.Data.Name) # show the interact label with the name of the item
-	else:
-		emit_signal("interact_target", false, "") # hide the interact label
-# clear the current world item the player can interact with, used for hiding the interact label when the player looks away from the item.
-func clear_world_item(world_item: WorldItem) -> void:
-	print("Clear world item:", world_item)
-	if current_world_item == world_item:
-		current_world_item = null
+func set_interactable(target: Node) -> void:
+	if not Interactable.can_interact(target, self):
+		clear_interactable(target)
+		return
+
+	current_interactable = target
+	emit_signal("interact_target", true, Interactable.interaction_text(target, self))
+
+func clear_interactable(target: Node) -> void:
+	if current_interactable == target:
+		current_interactable = null
 		emit_signal("interact_target", false, "")

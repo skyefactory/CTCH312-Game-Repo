@@ -13,7 +13,6 @@ class_name CraftingStation
 @export var assembler: bool = false # type of station
 @export var filler: bool = false #type of station
 var recipes: Array[Recipe] = [] # recipe storage
-var player_within_range: bool = false # is the player within the range of this station?
 var crafting_dict: Dictionary = {} # Dictionary that maps recipes to their status and crafting timer.
 
 enum recipe_status {
@@ -37,22 +36,6 @@ func _process(delta):
 				print("Crafting finished for recipe: " + recipe.result.Name)
 				crafting_dict[recipe]["status"] = recipe_status.READY # set the status to ready so the player can collect the item.
 				update_recipe_block_status(recipe) # update the UI for this recipe block to show that it is ready to collect.
-
-func can_interact(_interacting_player: Player) -> bool:
-	return player_within_range
-
-func get_interaction_text(_interacting_player: Player) -> String:
-	return "Press E to open %s" % station_name
-
-func interact(_interacting_player: Player) -> void:
-	if self.visible:
-		self.hide()
-		player.capture_mouse()
-	else:
-		update_crafting_status()
-		player.release_mouse()
-		player.interact_target.emit(false,"")
-		self.show()
 
 # when a recipe block is clicked on. Depending on the status of the recipe, we either start crafting, cancel crafting, or collect the crafted item.
 func on_recipe_button_pressed(recipe: Recipe) -> void:

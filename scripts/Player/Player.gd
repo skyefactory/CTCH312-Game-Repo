@@ -70,14 +70,15 @@ func _input(event):
 		screen_manager.forward_mouse_button(event)
 	
 	#check to see if we have a current interactable and if the interact button was pressed
-	if event.is_action_pressed("interact") and current_interactable:
+	if event.is_action_pressed("interact") and current_interactable and is_instance_valid(current_interactable):
 		Interactable.interact(current_interactable, self)
 
 # handle mouse look input
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		look_dir = event.relative * 0.001
-		if mouse_captured: _rotate_camera()
+		if mouse_captured: 
+			_rotate_camera()
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("release_mouse"): # toggle mouse capture on and off
@@ -87,9 +88,18 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("jump"): jumping = true  
 	# check for drop item input
 	if Input.is_action_just_pressed("drop_item"): drop_item()
+
 	# calculate final velocity vector and move the player
 	velocity = _walk(delta) + _gravity(delta) + _jump(delta)
 	screen_raycast_from_crosshair()
+	
+	# Check for interactable in view
+	var interact_result = interactable_in_view()
+	if interact_result:
+		set_interactable(interact_result)
+	elif current_interactable: # if there is no interactable in view but we have a current interactable, clear it.
+		clear_interactable(current_interactable)
+	print(current_interactable)
 	move_and_slide()
 
 # drops the currently held item into the world as a pickup. 
@@ -129,7 +139,7 @@ func drop_item():
 	world_item.global_position = global_position + forward * 2.00
 
 #checks to see if it is colliding with a collider on layer 3 to determine if we are looking at an item we can interact with.
-func interactable_in_view() -> bool:
+func interactable_in_view(max_distance: float = 2.5) -> Node:
 	var query = raycast_from_crosshair() # set up the ray query parameters for a raycast from the center of the screen
 	query.collide_with_bodies = true
 	query.collide_with_areas = false
@@ -138,8 +148,10 @@ func interactable_in_view() -> bool:
 	var result = get_world_3d().direct_space_state.intersect_ray(query) # perform the raycast and get the result
 
 	if result and result.collider:
-		return true
-	return false
+		var hit_distance = camera.global_position.distance_to(result.position)
+		if hit_distance <= max_distance: #debugging
+			return result.collider
+	return null
 
 
 
@@ -178,14 +190,18 @@ func _jump(delta: float) -> Vector3:
 	return jump_vel
 
 func set_interactable(target: Node) -> void:
+	if not is_instance_valid(target):
+		return
+	
 	if not Interactable.can_interact(target, self):
 		clear_interactable(target)
 		return
-
-	current_interactable = target
-	emit_signal("interact_target", true, Interactable.interaction_text(target, self))
+	if current_interactable != target:
+		current_interactable = target
+		emit_signal("interact_target", true, Interactable.interaction_text(target, self))
 
 func clear_interactable(target: Node) -> void:
-	if current_interactable == target:
+	# Clear if it matches, or if current is invalid
+	if current_interactable == target or (current_interactable and not is_instance_valid(current_interactable)):
 		current_interactable = null
 		emit_signal("interact_target", false, "")

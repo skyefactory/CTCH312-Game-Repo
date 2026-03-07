@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://tog5agrbe67a"]
+
+[ext_resource type="Script" uid="uid://j0v5tdjwn0bj" path="res://scripts/Inventory System/world_item.gd" id="1_cvdfa"]
+[ext_resource type="Resource" uid="uid://cxvhphsjfdbkf" path="res://scenes/items/item data/3_plainburger.tres" id="2_kua4s"]
+[ext_resource type="PackedScene" uid="uid://b1uukw6o88ec8" path="res://models/blend files/plain_burger.blend" id="3_do215"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_dxsgv"]
+height = 0.4080963
+radius = 0.6
+
+[node name="Plain Burger" type="RigidBody3D" unique_id=1775565736]
+collision_layer = 5
+linear_damp = 0.1
+angular_damp = 0.1
+script = ExtResource("1_cvdfa")
+Data = ExtResource("2_kua4s")
+metadata/_custom_type_script = "uid://j0v5tdjwn0bj"
+
+[node name="collider" type="CollisionShape3D" parent="." unique_id=1549140078]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.04602182, -0.06978625)
+shape = SubResource("CylinderShape3D_dxsgv")
+
+[node name="plain_burger" parent="." unique_id=1337013045 instance=ExtResource("3_do215")]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0.0035863668, 0, -0.0770615)

@@ -1,6 +1,24 @@
 [gd_scene format=3 uid="uid://df0wu0cybcy5h"]
 
 [ext_resource type="Script" uid="uid://c2adhnywm1ael" path="res://scripts/Crafting System/crafting_station.gd" id="1_l5kdm"]
+[ext_resource type="FontFile" uid="uid://kwk25hkyaadj" path="res://others/font/Oxanium-SemiBold.ttf" id="2_d6ci5"]
+
+[sub_resource type="FontFile" id="FontFile_qs4po"]
+msdf_pixel_range = 8
+cache/0/variation_coordinates = {}
+cache/0/face_index = 0
+cache/0/embolden = 0.0
+cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
+cache/0/spacing_top = 0
+cache/0/spacing_bottom = 0
+cache/0/spacing_space = 0
+cache/0/spacing_glyph = 0
+cache/0/baseline_offset = 0.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
 
 [node name="CraftingStationUI" type="Control" unique_id=1728938586]
 layout_mode = 3
@@ -10,20 +28,23 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 538.0
-offset_top = 284.0
+offset_top = 282.0
 offset_right = 578.0
-offset_bottom = 324.0
+offset_bottom = 322.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.5, 1.5)
 size_flags_horizontal = 4
 script = ExtResource("1_l5kdm")
 
 [node name="StationName" type="Label" parent="." unique_id=1189991921]
 layout_mode = 0
 offset_left = -274.0
-offset_top = -123.0
-offset_right = -172.0
-offset_bottom = -100.0
+offset_top = -124.0
+offset_right = -126.0
+offset_bottom = -91.0
+theme_override_fonts/font = ExtResource("2_d6ci5")
+theme_override_font_sizes/font_size = 24
 text = "StationName"
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=203809538]
@@ -73,5 +94,6 @@ offset_left = 292.0
 offset_top = -127.0
 offset_right = 316.0
 offset_bottom = -102.0
-theme_override_font_sizes/font_size = 12
+theme_override_fonts/font = SubResource("FontFile_qs4po")
+theme_override_font_sizes/font_size = 16
 text = " X "

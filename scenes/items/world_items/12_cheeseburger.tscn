@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://5q8wk1dr12di" path="res://models/blend files/cheese_burger.blend" id="3_hmbev"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_dxsgv"]
-height = 0.4080963
+height = 0.5121536
 radius = 0.6
 
 [node name="Cheese Burger" type="RigidBody3D" unique_id=1775565736]
@@ -17,7 +17,7 @@ Data = ExtResource("2_waak3")
 metadata/_custom_type_script = "uid://j0v5tdjwn0bj"
 
 [node name="collider" type="CollisionShape3D" parent="." unique_id=1549140078]
-transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.04602182, -0.06978625)
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.07203615, -0.06978625)
 shape = SubResource("CylinderShape3D_dxsgv")
 
 [node name="cheese_burger" parent="." unique_id=1336162734 instance=ExtResource("3_hmbev")]

@@ -10,4 +10,5 @@ Name = "Cheese"
 Icon = ExtResource("1_io7ro")
 Description = "ches"
 MaxStackSize = 10
+WorldModelPath = "res://scenes/items/world_items/6_cheese.tscn"
 metadata/_custom_type_script = "uid://c2h4urya43rqc"

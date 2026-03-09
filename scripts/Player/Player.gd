@@ -36,9 +36,9 @@ func _ready() -> void: # capture the mouse
 	capture_mouse()
 
 func raycast_from_crosshair() ->PhysicsRayQueryParameters3D:
-	#get the exact center of the screen, this is where the crosshair is
-	var viewport_size = get_viewport().size
-	var screen_center = viewport_size / 2
+
+	var active_viewport := camera.get_viewport()
+	var screen_center := active_viewport.get_visible_rect().get_center()
 	
 	#send out a ray from the center of the screen relative to where the camera is
 	var ray_origin = camera.project_ray_origin(screen_center)
@@ -99,7 +99,6 @@ func _physics_process(delta: float) -> void:
 		set_interactable(interact_result)
 	elif current_interactable: # if there is no interactable in view but we have a current interactable, clear it.
 		clear_interactable(current_interactable)
-	print(current_interactable)
 	move_and_slide()
 
 # drops the currently held item into the world as a pickup. 
@@ -139,7 +138,7 @@ func drop_item():
 	world_item.global_position = global_position + forward * 2.00
 
 #checks to see if it is colliding with a collider on layer 3 to determine if we are looking at an item we can interact with.
-func interactable_in_view(max_distance: float = 2.5) -> Node:
+func interactable_in_view(max_distance: float = 7.5) -> Node:
 	var query = raycast_from_crosshair() # set up the ray query parameters for a raycast from the center of the screen
 	query.collide_with_bodies = true
 	query.collide_with_areas = false

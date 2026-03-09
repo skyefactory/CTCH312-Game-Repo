@@ -90,21 +90,27 @@ func initialize_recipes() -> void: #setup crafting dict with all recipes as keys
 		}
 
 func load_recipes() -> void: #load all recipes from the specified path and add them to the recipes array.
+	recipes.clear()
 	var dir = DirAccess.open(recipes_path) # open the path
 	if dir: # if the path was opened OK
 		dir.list_dir_begin() # begin listing the dir
 		var file_name = dir.get_next() # get the filename
 
 		while file_name != "": # if filename is not empty
-			if file_name.ends_with(".tres"): # if it is a resource file
-				#load the resource
-				var recipe_resource = ResourceLoader.load(recipes_path + "/" + file_name)
-				#check that it is a recipe
+			if not dir.current_is_dir():
+				var resource_path := recipes_path.path_join(file_name)
+				# Exported builds may list remapped resources as *.remap.
+				if resource_path.ends_with(".remap"):
+					resource_path = resource_path.trim_suffix(".remap")
+
+				var recipe_resource = ResourceLoader.load(resource_path)
 				if recipe_resource is Recipe and ((assembler and recipe_resource.assemblable) or (filler and recipe_resource.drinkable)):
-					#add it to our recipes
 					recipes.append(recipe_resource)
 			#get the next file
 			file_name = dir.get_next()
+		dir.list_dir_end()
+		if recipes.is_empty():
+			push_warning("No station recipes were loaded from path: " + recipes_path)
 		return
 	# If we failed to open the directory, print an error
 	push_error("Failed to load recipes from path: " + recipes_path)
@@ -122,11 +128,9 @@ func debug_print_recipes() -> void: # print the loaded recipes for debugging pur
 
 func update_crafting_status() -> void:
 	for recipe in recipes: # for each recipe.
-		var can_craft = true # can we craft this?
-		for ingredient in recipe.ingredients: # check if we can craft.
-			if not inventory.has_item(ingredient):
-				can_craft = false
-				break
+		var result = inventory.has_items(recipe.ingredients)
+		var can_craft = result["has_all"]
+		
 		if can_craft and (crafting_dict[recipe]["status"] != recipe_status.CRAFTING && crafting_dict[recipe]["status"] != recipe_status.READY): # if we can craft and it's not already crafting, set it to craftable.
 			crafting_dict[recipe]["status"] = recipe_status.CRAFTABLE
 		elif not can_craft and (crafting_dict[recipe]["status"] != recipe_status.CRAFTING && crafting_dict[recipe]["status"] != recipe_status.READY): # if we can't craft and it's not already crafting, set it to unavailable.

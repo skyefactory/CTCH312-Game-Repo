@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://cnlg2k5iquqry" path="res://scripts/UI/orderbutton.gd" id="1_77pfx"]
 [ext_resource type="Script" uid="uid://brooydsgo0ejl" path="res://scripts/UI/order_ui_timer.gd" id="2_77pfx"]
+[ext_resource type="FontFile" uid="uid://g18qbv0vwrrr" path="res://others/font/Oxanium-Bold.ttf" id="2_hcwp6"]
+[ext_resource type="FontFile" uid="uid://kwk25hkyaadj" path="res://others/font/Oxanium-SemiBold.ttf" id="3_mrduy"]
+[ext_resource type="FontFile" uid="uid://d01uwom00xy2e" path="res://others/font/Oxanium-Light.ttf" id="4_hegyg"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_77pfx"]
 
@@ -20,26 +23,31 @@ script = ExtResource("1_77pfx")
 [node name="ColorRect" type="ColorRect" parent="." unique_id=274165364]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 200.0
+offset_bottom = 239.0
+scale = Vector2(1.3199998, 1.0400003)
 mouse_filter = 2
 color = Color(1, 0, 0, 1)
 
 [node name="RecipeName" type="RichTextLabel" parent="." unique_id=943594512]
 layout_mode = 0
-offset_right = 200.0
-offset_bottom = 200.0
+offset_right = 265.0
+offset_bottom = 50.0
 mouse_filter = 2
+theme_override_colors/default_color = Color(1, 1, 0, 1)
+theme_override_fonts/normal_font = ExtResource("2_hcwp6")
+theme_override_font_sizes/normal_font_size = 26
 text = "PLACEHOLDER"
 
 [node name="Ingredients" type="RichTextLabel" parent="." unique_id=1375929280]
-clip_contents = false
 layout_mode = 0
-offset_left = 25.0
-offset_top = 25.0
-offset_right = 200.0
-offset_bottom = 225.0
+offset_left = 4.0
+offset_top = 50.0
+offset_right = 263.0
+offset_bottom = 215.0
 mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_mrduy")
+theme_override_font_sizes/normal_font_size = 22
 text = "o PLACEHOLDER
 o PLACEHOLDER"
 
@@ -47,20 +55,22 @@ o PLACEHOLDER"
 
 [node name="ColorRect2" type="ColorRect" parent="." unique_id=37019258]
 layout_mode = 0
-offset_left = 2.9999998
-offset_top = 157.0
+offset_left = 3.0
+offset_top = 206.0
 offset_right = 43.0
-offset_bottom = 197.0
+offset_bottom = 246.0
 scale = Vector2(3.08, 1)
 color = Color(0, 0.40619966, 0.5057472, 1)
 
 [node name="Timer" type="RichTextLabel" parent="." unique_id=570306792]
 layout_mode = 0
 offset_left = 7.0
-offset_top = 164.0
+offset_top = 213.0
 offset_right = 207.0
-offset_bottom = 364.0
+offset_bottom = 413.0
 mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("4_hegyg")
+theme_override_font_sizes/normal_font_size = 18
 text = "PLACEHOLDER"
 script = ExtResource("2_77pfx")
 

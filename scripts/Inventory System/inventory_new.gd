@@ -6,7 +6,7 @@ var inventory_size: int = 9 # size of inventory
 var selected_slot: int = -1 # current selected item in item list
 signal inventory_changed # emitted when the inventory is changed. used for sending signals to the UI to update.
 signal selected_item_changed # emitted when the player changes the inventory selection to update the ItemList.
-var held_item: InventorySlot # reference to the currently held item. Updated every frame.
+var held_item: InventorySlot = null # reference to the currently held item. Updated every frame.
 
 func _ready() -> void:
 	# Initialize the inventory with empty slots
@@ -19,7 +19,7 @@ func _process(_delta: float) -> void:
 	handle_slot_input() # check for input to change selected slot
 	if selected_slot >=0 and selected_slot < inventory_size: #update held item reference
 		held_item = slots[selected_slot]
-	
+	else: held_item = null
 	#clear any 0 quantity items from the inventory
 	for i in range(inventory_size):
 		if slots[i].item != null and slots[i].quantity <= 0:
@@ -140,17 +140,32 @@ func add_item_to_stack(item: ItemData, quantity: int) -> int:
 func has_items(required_items: Array[ItemData]) -> Dictionary:
 	var missing: Array[ItemData] = [] # any items that were not found in the inventory.
 	
-	for required_item in required_items: # go over each required item
+	# Count how many of each item is required
+	var required_counts: Dictionary = {} # maps ItemData.ID to required quantity
+	for required_item in required_items:
+		if not required_counts.has(required_item.ID):
+			required_counts[required_item.ID] = 0
+		required_counts[required_item.ID] += 1
+	
+	# Check if we have enough of each required item
+	for item_id in required_counts.keys():
+		var required_quantity = required_counts[item_id]
 		var found_quantity: int = 0
 		
 		# Count how many of this item we have across all slots
 		for slot in slots:
-			if slot.item != null and slot.item.ID == required_item.ID:
+			if slot.item != null and slot.item.ID == item_id:
 				found_quantity += slot.quantity
 		
-		# If we don't have at least 1, add to missing list
-		if found_quantity < 1:
-			missing.append(required_item)
+		# If we don't have enough, add the required instances to missing list
+		if found_quantity < required_quantity:
+			# Find an example of this item to add to missing list
+			for required_item in required_items:
+				if required_item.ID == item_id:
+					# Add as many copies as we're missing
+					for i in range(required_quantity - found_quantity):
+						missing.append(required_item)
+					break
 	
 	# return a dictionary. Key "has all" is true iff there are no missing items, and key "missing" is the list of any missing items.
 	return {

@@ -31,7 +31,8 @@ func set_tt_text(ingredients: Array[ItemData], missing: Array[ItemData]) -> void
 	var text = "[color=white]Ingredients:[/color]\n"
 	for ingredient in ingredients:
 		if ingredient in missing:
-			text += "[color=red]- " + ingredient.Name + " (missing) [/color]\n"
+			text += "[outline_size=1][outline_color=black][color=#FF5555][b]- " + ingredient.Name + " (missing)[/b][/color][/outline_color][/outline_size]\n"
+			missing.erase(ingredient) # remove this ingredient from the missing list so that if there are duplicates it doesn't mark them all as missing.
 		else:
 			text += "- " + ingredient.Name + "\n"
 	tooltip_label.text = text

@@ -19,21 +19,27 @@ signal update_orders_ui #emitted whenever an order is added/removed from pending
 
 #load all the recipes from recipes_path into the recipes array
 func load_recipes() -> void:
+    recipes.clear()
     var dir = DirAccess.open(recipes_path) # open the path
     if dir: # if the path was opened OK
         dir.list_dir_begin() # begin listing the dir
         var file_name = dir.get_next() # get the filename
 
         while file_name != "": # if filename is not empty
-            if file_name.ends_with(".tres"): # if it is a resource file
-                #load the resource
-                var recipe_resource = ResourceLoader.load(recipes_path + "/" + file_name)
-                #check that it is a recipe
+            if not dir.current_is_dir():
+                var resource_path := recipes_path.path_join(file_name)
+                # Exported builds may list remapped resources as *.remap.
+                if resource_path.ends_with(".remap"):
+                    resource_path = resource_path.trim_suffix(".remap")
+
+                var recipe_resource = ResourceLoader.load(resource_path)
                 if recipe_resource is Recipe:
-                    #add it to our recipes
                     recipes.append(recipe_resource)
             #get the next file
             file_name = dir.get_next()
+        dir.list_dir_end()
+        if recipes.is_empty():
+            push_warning("No recipes were loaded from path: " + recipes_path)
         return
     # If we failed to open the directory, print an error
     push_error("Failed to load recipes from path: " + recipes_path)
@@ -157,7 +163,8 @@ func get_active_order() -> Order:
 func on_day_start() -> void:
     for i in range(2): # create 2 initial orders at the start of the day
         var order = new_order()
-        pending_orders.append(order)
+        if order:
+            pending_orders.append(order)
     day_started = true
     update_orders_ui.emit(pending_orders)
 

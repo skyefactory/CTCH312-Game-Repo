@@ -10,5 +10,5 @@ Name = "Burger Buns"
 Icon = ExtResource("1_2qax2")
 Description = "A top and bottom bun. Perhaps a patty can go between, or maybe not, who knows..."
 MaxStackSize = 6
-WorldModelPath = "res://scenes/items/world_items/buns.tscn"
+WorldModelPath = "res://scenes/items/world_items/2_buns.tscn"
 metadata/_custom_type_script = "uid://c2h4urya43rqc"

@@ -22,6 +22,8 @@ func update_screen(pending_orders: Array[Order]) -> void:
 		if idNode:
 			var found = false
 			for o in pending_orders: # match the order UI to the order instance. 
+				if o == null:
+					continue
 				if idNode.name == str(o.id):
 					found = true
 					#update the order with the latest info from the order instance.
@@ -49,6 +51,8 @@ func update_screen(pending_orders: Array[Order]) -> void:
 	
 	# go over each order, check if it was found on the screen, if not, create it.
 	for o in pending_orders:
+		if o == null:
+			continue
 		if not displayed_order_ids.has(o.id): # not found on screen, need to add it.
 			var ui = OrderUIScene.instantiate() # create new order UI scene and initialize it.
 			var recipeNameLabel: RichTextLabel = ui.get_child(2)

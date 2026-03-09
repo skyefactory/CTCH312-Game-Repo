@@ -10,4 +10,5 @@ Name = "Cheeseburger"
 Icon = ExtResource("1_3ym6k")
 Description = "can i has chezburger pls"
 MaxStackSize = 1
+WorldModelPath = "res://scenes/items/world_items/12_cheeseburger.tscn"
 metadata/_custom_type_script = "uid://c2h4urya43rqc"

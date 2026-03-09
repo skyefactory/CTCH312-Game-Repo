@@ -11,6 +11,7 @@ Name = "Cooked Bacon"
 Icon = ExtResource("1_ukcf4")
 Description = "Some Cooka Bacon. Yum x2"
 MaxStackSize = 10
+WorldModelPath = "res://scenes/items/world_items/5_cooked_bacon.tscn"
 cook_result = ExtResource("2_my48l")
 time_to_cook = 10.0
 metadata/_custom_type_script = "uid://c2h4urya43rqc"

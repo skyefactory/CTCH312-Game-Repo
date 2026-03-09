@@ -11,6 +11,7 @@ Name = "Raw Bacon"
 Icon = ExtResource("1_enp0b")
 Description = "Raw Bacon.....mmmmmmmmmmmmmmmmmmmmmmmm"
 MaxStackSize = 10
+WorldModelPath = "res://scenes/items/world_items/4_raw_bacon.tscn"
 cook_result = ExtResource("2_fkqsc")
 time_to_cook = 10.0
 metadata/_custom_type_script = "uid://c2h4urya43rqc"

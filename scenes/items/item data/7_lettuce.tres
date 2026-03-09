@@ -10,4 +10,5 @@ Name = "Lettuce"
 Icon = ExtResource("1_v0h5c")
 Description = "what the lettuce"
 MaxStackSize = 4
+WorldModelPath = "res://scenes/items/world_items/7_lettuce.tscn"
 metadata/_custom_type_script = "uid://c2h4urya43rqc"

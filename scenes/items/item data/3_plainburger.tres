@@ -10,4 +10,5 @@ Name = "Plain Burger"
 Icon = ExtResource("1_pfbcs")
 Description = "Plain Burger. Whoever ordered this is a loser."
 MaxStackSize = 1
+WorldModelPath = "res://scenes/items/recipes/plain_burger.tres"
 metadata/_custom_type_script = "uid://c2h4urya43rqc"
